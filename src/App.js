@@ -1,27 +1,37 @@
 import GlobalStyle from "./globalStyles";
 import HeaderBar from "./components/HeaderBar";
 import SocialCards from "./components/SocialCards";
+import styled from "styled-components";
 
 const App = () => {
   return (
     <>
       <GlobalStyle />
-      <HeaderBar>
-        {/* TODO: Slots system, issue #5
+      <StreamLayout>
+        <HeaderBar>
+          {/* TODO: Slots system, issue #5
         - Can include components like
           <Subscriber />
           <Host />
           <Follower />
           <Counter />
         */}
-      </HeaderBar>
-      <SocialCards>
-        {/* TODO: Fade in/out Twitter, YouTube etc info 
+        </HeaderBar>
+        <SocialCards>
+          {/* TODO: Fade in/out Twitter, YouTube etc info 
         - Not visible always
         */}
-      </SocialCards>
+        </SocialCards>
+      </StreamLayout>
     </>
   );
 };
 
 export default App;
+
+const StreamLayout = styled.div({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
+  height: "100vh",
+});

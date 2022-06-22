@@ -14,8 +14,8 @@ const SocialCards = () => {
 
 export default SocialCards;
 
-const SocialCardContainer = styled.div`
-  background-color: red;
-  width: 250px;
-  height: 100px;
-`;
+const SocialCardContainer = styled.div({
+  backgroundColor: "red",
+  width: "250px",
+  height: "100px"
+})
