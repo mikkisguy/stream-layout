@@ -13,12 +13,12 @@ const HeaderBar = () => {
       <p>lorem ipsum</p>
     </HeaderBarContainer>
   );
-}
+};
 
 export default HeaderBar;
 
 const HeaderBarContainer = styled.div({
   backgroundColor: "#dedede",
-  padding: "20px", 
-  alignSelf: "center"
-})
+  padding: "20px",
+  alignSelf: "center",
+});

@@ -10,12 +10,12 @@ const SocialCards = () => {
       <p>lorem ipsum</p>
     </SocialCardContainer>
   );
-}
+};
 
 export default SocialCards;
 
 const SocialCardContainer = styled.div({
   backgroundColor: "red",
   width: "250px",
-  height: "100px"
-})
+  height: "100px",
+});
