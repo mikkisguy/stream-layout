@@ -6,10 +6,10 @@ import styled from "styled-components";
 
 const SocialCards = () => {
   return (
-  <SocialCardContainer>
-    <p>lorem ipsum</p>
-  </SocialCardContainer>
-  )
+    <SocialCardContainer>
+      <p>lorem ipsum</p>
+    </SocialCardContainer>
+  );
 }
 
 export default SocialCards;
