@@ -6,11 +6,12 @@
             <Counter />
 */
 import styled from "styled-components";
+import mikkisGuyHead from "../assets/images/mikkisguy-head.png";
 
 const HeaderBar = () => {
   return (
     <HeaderBarContainer>
-      <p>lorem ipsum</p>
+      <MikkisGuyHead src={mikkisGuyHead} alt="" />
     </HeaderBarContainer>
   );
 };
@@ -18,7 +19,11 @@ const HeaderBar = () => {
 export default HeaderBar;
 
 const HeaderBarContainer = styled.div({
-  backgroundColor: "#dedede",
   padding: "20px",
   alignSelf: "center",
+});
+
+const MikkisGuyHead = styled.img({
+  height: "60px",
+  width: "60px",
 });
