@@ -1,9 +1,9 @@
 import { createGlobalStyle } from "styled-components";
 import minecraftScreenshot from "../assets/images/minecraft-screenshot.png";
+import cssReset from "./cssReset";
 
 const GlobalStyle = createGlobalStyle({
-  "*": { boxSizing: "border-box" },
-
+  ...cssReset,
   body: {
     backgroundImage: `url('${minecraftScreenshot}')`,
     backgroundSize: "100vw 100vh",
