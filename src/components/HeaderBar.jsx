@@ -1,14 +1,15 @@
-/* TODO: Slots system, issue #5
+import styled from "styled-components";
+import mikkisGuyHead from "../assets/images/mikkisguy-head.png";
+
+const HeaderBar = () => {
+  /* TODO: Slots system, issue #5
           - Can include components like
             <Subscriber />
             <Host />
             <Follower />
             <Counter />
-*/
-import styled from "styled-components";
-import mikkisGuyHead from "../assets/images/mikkisguy-head.png";
+  */
 
-const HeaderBar = () => {
   return (
     <HeaderBarContainer>
       <MikkisGuyHead src={mikkisGuyHead} alt="" />
