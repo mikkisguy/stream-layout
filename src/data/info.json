@@ -1,0 +1,32 @@
+{
+  "twitter": {
+    "title": "Seuraa Twitterissä!",
+    "content": "Striimi-ilmoitukset yms",
+    "color": "#1d9bf0"
+  },
+  "youtubeMain": {
+    "title": "MikkisGuy YouTubessa",
+    "content": "Minecraftia ja elämää",
+    "color": "#c00"
+  },
+  "youtubeArchive": {
+    "title": "MikkisGuy Arkisto",
+    "content": "Striimitallenteet YouTubessa",
+    "color": "#c00"
+  },
+  "instagram": {
+    "title": "Seuraa Instagramissa",
+    "content": "Minecraft silmäkarkkia",
+    "color": "#7b06e8"
+  },
+  "discord": {
+    "title": "Liity Discordiin!",
+    "content": "Yhteisön hengailuun",
+    "color": "#5460e6"
+  },
+  "schedule": {
+    "title": "Striimien aikataulu",
+    "content": "Koodia ma, Minecraftia ke ja pe",
+    "color": "#a970ff"
+  }
+}
