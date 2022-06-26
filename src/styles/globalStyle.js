@@ -1,6 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 import minecraftScreenshot from "../assets/images/minecraft-screenshot.png";
-import cssReset from "./cssReset";
+import { cssReset } from "./variables";
 
 const GlobalStyle = createGlobalStyle({
   ...cssReset,

@@ -1,4 +1,4 @@
-import GlobalStyle from "./globalStyles";
+import GlobalStyle from "./styles/globalStyle";
 import HeaderBar from "./components/HeaderBar";
 import SocialCards from "./components/SocialCards";
 import styled from "styled-components";
