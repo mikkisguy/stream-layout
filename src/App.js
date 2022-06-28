@@ -17,9 +17,9 @@ const App = () => {
 
 export default App;
 
-const StreamLayout = styled.div({
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "space-between",
-  height: "100vh",
-});
+const StreamLayout = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+`;

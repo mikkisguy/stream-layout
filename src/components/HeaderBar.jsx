@@ -19,12 +19,12 @@ const HeaderBar = () => {
 
 export default HeaderBar;
 
-const HeaderBarContainer = styled.div({
-  padding: "20px",
-  alignSelf: "center",
-});
+const HeaderBarContainer = styled.div`
+  padding: 20px;
+  align-self: center;
+`;
 
-const MikkisGuyHead = styled.img({
-  height: "60px",
-  width: "60px",
-});
+const MikkisGuyHead = styled.img`
+  height: 60px;
+  width: 60px;
+`;
