@@ -8,19 +8,30 @@ const InfoCards = () => {
         - Not visible always
   */
   const infoKeys = Object.keys(infoJson);
+  const [infoIndex, setInfoIndex] = useState(0);
   const [currentInfo, setCurrentInfo] = useState(infoJson[infoKeys[0]]);
   const [showCard, setShowCard] = useState(true);
-  const milliseconds = showCard ? 2000 : 3000; // show: 8000, hide: 300000 = 5min
-  const random = Math.floor(Math.random() * infoKeys.length);
+  const milliseconds = showCard ? 2000 : 1000; // show: 8000, hide: 300000 = 5min
 
   useEffect(() => {
-    setTimeout(() => {
+    const infoCardTimer = setTimeout(() => {
       setShowCard(!showCard);
 
       if (!showCard) {
-        setCurrentInfo(infoJson[infoKeys[random]]);
+        const nextIndex = () => {
+          if (infoIndex === infoKeys.length - 1) {
+            return 0;
+          }
+
+          return infoIndex + 1;
+        };
+
+        setInfoIndex(nextIndex());
+        setCurrentInfo(infoJson[infoKeys[nextIndex()]]);
       }
     }, milliseconds);
+
+    return () => clearTimeout(infoCardTimer);
   });
 
   return (
