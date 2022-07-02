@@ -11,7 +11,7 @@ const InfoCards = () => {
   const [infoIndex, setInfoIndex] = useState(0);
   const [currentInfo, setCurrentInfo] = useState(infoJson[infoKeys[0]]);
   const [showCard, setShowCard] = useState(true);
-  const milliseconds = showCard ? 2000 : 1000; // show: 8000, hide: 300000 = 5min
+  const milliseconds = showCard ? 8000 : 300000; // show: 8000, hide: 300000 = 5min
 
   useEffect(() => {
     const infoCardTimer = setTimeout(() => {
@@ -46,7 +46,7 @@ export default InfoCards;
 const InfoCardContainer = styled.div`
   display: ${({ showCard }) => (showCard ? "block" : "none")};
   background-color: ${colors.peach};
-  width: 250px;
-  height: 100px;
+  width: 400px;
+  height: 200px;
   margin: 15px;
 `;
