@@ -10,3 +10,8 @@ export const colors = {
   peach: "#ffcb9a",
   peachDark: "#d9b08c",
 };
+
+export const resolution = {
+  w: "1920px",
+  h: "1080px",
+};

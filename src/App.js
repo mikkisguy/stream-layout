@@ -2,6 +2,7 @@ import GlobalStyle from "./styles/globalStyle";
 import HeaderBar from "./components/HeaderBar";
 import InfoCards from "./components/InfoCards";
 import styled from "styled-components";
+import { resolution } from "./styles/variables";
 
 const App = () => {
   return (
@@ -21,5 +22,6 @@ const StreamLayout = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100vh;
+  width: ${resolution.w};
+  height: ${resolution.h};
 `;
