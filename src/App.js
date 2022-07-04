@@ -21,7 +21,7 @@ const App = () => {
       localStorage.setItem(TOKEN_DATA_KEY, JSON.stringify(initialTokenData));
     }
 
-    const jee = async () => {
+    const testRefreshToken = async () => {
       const tokenData = JSON.parse(localStorage.getItem(TOKEN_DATA_KEY));
       const authProvider = new RefreshingAuthProvider(
         {
@@ -40,7 +40,7 @@ const App = () => {
       console.log(user);
     };
 
-    jee();
+    testRefreshToken();
   }, []);
 
   return (
