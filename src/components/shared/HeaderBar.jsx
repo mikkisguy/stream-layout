@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import mikkisGuyHead from "../../assets/images/mikkisguy-head.png";
+import mikkisGuyHead from "../../assets/images/mikkisguyHead.png";
 import { colors } from "../../styles/variables";
 
 const HeaderBar = () => {
