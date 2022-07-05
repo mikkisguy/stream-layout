@@ -1,3 +1,6 @@
+import HeaderBar from "../shared/HeaderBar";
+import InfoCards from "../shared/InfoCards";
+
 const Main = ({
   fullWidthBar = false,
   justChatting = false,
@@ -12,6 +15,13 @@ const Main = ({
   console.log("fullWidthBar", fullWidthBar);
   console.log("justChatting", justChatting);
   console.log("onBreak", onBreak);
+
+  return (
+    <>
+      <HeaderBar />
+      <InfoCards />
+    </>
+  );
 };
 
 export default Main;

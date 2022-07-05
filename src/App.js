@@ -1,6 +1,4 @@
 import GlobalStyle from "./styles/globalStyle";
-import HeaderBar from "./components/shared/HeaderBar";
-import InfoCards from "./components/shared/InfoCards";
 import styled from "styled-components";
 import { resolution } from "./styles/variables";
 import { useEffect } from "react";
@@ -13,6 +11,7 @@ import {
   INITIAL_REFRESH_TOKEN,
 } from "./constants.js";
 import { ApiClient } from "@twurple/api";
+import { Outlet } from "react-router-dom";
 
 const App = () => {
   useEffect(() => {
@@ -60,8 +59,7 @@ const App = () => {
     <>
       <GlobalStyle />
       <StreamLayout>
-        <HeaderBar />
-        <InfoCards />
+        <Outlet />
       </StreamLayout>
     </>
   );

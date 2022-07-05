@@ -9,14 +9,18 @@ const Routing = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="fullwidth" element={<Main fullWidthBar />} />
-        <Route path="chatting" element={<Main justChatting />} />
-        <Route path="break" element={<Main onBreak />}>
-          <Route path="fullwidth" element={<Main fullWidthBar onBreak />} />
+        <Route path="/" element={<App />}>
+          <Route index element={<Main />} />
+          <Route path="fullwidth" element={<Main fullWidthBar />} />
+          <Route path="chatting" element={<Main justChatting />} />
+          <Route path="break" element={<Main onBreak />} />
+          <Route
+            path="break-fullwidth"
+            element={<Main fullWidthBar onBreak />}
+          />
+          <Route path="intro" element={<Secondary />} />
+          <Route path="outro" element={<Secondary asOutro />} />
         </Route>
-        <Route path="intro" element={<Secondary />} />
-        <Route path="outro" element={<Secondary asOutro />} />
       </Routes>
     </BrowserRouter>
   );
