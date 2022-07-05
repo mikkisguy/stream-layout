@@ -8,3 +8,4 @@ export const SSL_CERT = process.env.REACT_APP_SSL_CERT;
 export const EVENTSUB_SECRET = process.env.REACT_APP_EVENTSUB_SECRET;
 
 export const TOKEN_DATA_KEY = "TWITCH_TOKEN_DATA";
+export const IS_DEVELOPMENT = ENV === "development";

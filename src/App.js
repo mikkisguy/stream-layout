@@ -11,7 +11,8 @@ import {
   INITIAL_REFRESH_TOKEN,
 } from "./constants.js";
 import { ApiClient } from "@twurple/api";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
+import { IS_DEVELOPMENT } from "./constants";
 
 const App = () => {
   useEffect(() => {
@@ -61,6 +62,15 @@ const App = () => {
       <StreamLayout>
         <Outlet />
       </StreamLayout>
+      <RouterLinks isDevelopment={IS_DEVELOPMENT}>
+        <Link to="/">Main</Link>
+        <Link to="fullwidth">Main full width</Link>
+        <Link to="chatting">Just chatting</Link>
+        <Link to="break">Break</Link>
+        <Link to="break-fullwidth">Break full width</Link>
+        <Link to="intro">Intro</Link>
+        <Link to="outro">Outro</Link>
+      </RouterLinks>
     </>
   );
 };
@@ -73,4 +83,23 @@ const StreamLayout = styled.div`
   justify-content: space-between;
   width: ${resolution.w};
   height: ${resolution.h};
+`;
+
+const RouterLinks = styled.div`
+  display: ${({ isDevelopment }) => (isDevelopment ? "block" : "none")};
+  padding: 15px;
+
+  a {
+    color: #fff;
+    display: inline-block;
+    padding: 5px 10px;
+    border: 1px solid #fff;
+    margin-right: 15px;
+    text-decoration: none;
+    font-size: 20px;
+
+    :hover {
+      text-decoration: underline;
+    }
+  }
 `;
