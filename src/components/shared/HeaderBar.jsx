@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import mikkisGuyHead from "../assets/images/mikkisguy-head.png";
-import { colors } from "../styles/variables";
+import mikkisGuyHead from "../../assets/images/mikkisguy-head.png";
+import { colors } from "../../styles/variables";
 
 const HeaderBar = () => {
   /* TODO: Slots system, issue #5

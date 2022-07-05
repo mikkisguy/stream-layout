@@ -1,6 +1,6 @@
 import GlobalStyle from "./styles/globalStyle";
-import HeaderBar from "./components/HeaderBar";
-import InfoCards from "./components/InfoCards";
+import HeaderBar from "./components/shared/HeaderBar";
+import InfoCards from "./components/shared/InfoCards";
 import styled from "styled-components";
 import { resolution } from "./styles/variables";
 import { useEffect } from "react";

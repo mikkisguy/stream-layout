@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { colors } from "../styles/variables";
-import infoJson from "../data/info.json";
+import { colors } from "../../styles/variables";
+import infoJson from "../../data/info.json";
 import { useState, useEffect } from "react";
 
 const InfoCards = () => {

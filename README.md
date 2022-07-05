@@ -36,4 +36,3 @@ Stream layout stuff for MikkisGuy Twitch streams
   - "Check schedule from Twitch page"
 - Break scene
   - Break text
-  - Vertical info, same as in the bar
