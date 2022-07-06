@@ -39,7 +39,7 @@ export const eventSchema = new mongoose.Schema({
     enum: ["SUB", "HOST", "FOLLOW"],
     required: true,
   },
-  nick: {
+  user: {
     type: String,
     required: true,
   },
