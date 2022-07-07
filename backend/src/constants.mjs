@@ -4,6 +4,7 @@ import { tokenSchema } from "./schemas.mjs";
 import { RefreshingAuthProvider } from "@twurple/auth";
 
 export const USER_ID = "140442943";
+export const USER_NAME = "mikkisguy";
 
 const DB_NAME = process.env.DB_NAME;
 const DB_USER = process.env.DB_USER;
