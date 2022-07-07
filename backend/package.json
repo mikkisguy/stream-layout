@@ -9,7 +9,7 @@
   "private": false,
   "scripts": {
     "dev": "nodemon -r dotenv/config src/server.mjs",
-    "start": "node src/server.mjs"
+    "start": "node -r dotenv/config src/server.mjs"
   },
   "dependencies": {
     "@twurple/api": "^5.1.6",
