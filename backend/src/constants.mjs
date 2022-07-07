@@ -1,6 +1,9 @@
 import { format } from "date-fns";
 import { mongoose } from "mongoose";
-import { configSchema } from "./schemas.mjs";
+import { tokenSchema } from "./schemas.mjs";
+import { RefreshingAuthProvider } from "@twurple/auth";
+
+export const USER_ID = "140442943";
 
 const DB_NAME = process.env.DB_NAME;
 const DB_USER = process.env.DB_USER;
@@ -11,6 +14,9 @@ const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 
 const DB_CONNECTION_STRING = `mongodb://${DB_USER}:${DB_PASSWORD}@localhost:27017/${DB_NAME}`;
+
+// Create model (collection in MongoDB)
+const Token = mongoose.model("Token", tokenSchema);
 
 export const logger = (message, error = false) => {
   const date = format(new Date(), "yyyy-MM-dd HH:mm:ss");
@@ -28,32 +34,62 @@ export const initDatabase = async () => {
 
   await mongoose.connection.on("connected", () => logger("Database connected"));
 
-  // Create model (collection in MongoDB)
-  const Config = mongoose.model("Config", configSchema);
-
-  // Check if config is already initialized
-  const initCheck = await Config.findById(1).exec();
+  // Check if token data is already initialized
+  const initCheck = await Token.findById(1).exec();
 
   if (initCheck == undefined) {
-    // Set initial config
-    const initialConfig = new Config({
+    // Set initial token data
+    const initialTokenData = new Token({
       _id: 1,
-      token: {
-        access: INITIAL_ACCESS_TOKEN,
-        refresh: INITIAL_REFRESH_TOKEN,
-        expiresIn: 0,
-        obtainmentTimestamp: 0,
-      },
-      client: { id: CLIENT_ID, secret: CLIENT_SECRET },
+      accessToken: INITIAL_ACCESS_TOKEN,
+      refreshToken: INITIAL_REFRESH_TOKEN,
+      expiresIn: 0,
+      obtainmentTimestamp: 0,
     });
 
     // Save to database
-    await initialConfig.save().then((savedConfig) => {
-      if (savedConfig === initialConfig) {
-        logger("Initial config saved");
+    await initialTokenData.save().then((saved) => {
+      if (saved === initialTokenData) {
+        logger("Initial token data saved");
       }
     });
   } else {
-    return logger("Config already initialized");
+    return logger("Token data already initialized");
   }
+};
+
+export const refreshingAuthProvider = async () => {
+  let tokenData = await Token.findById(
+    1,
+    "accessToken refreshToken expiresIn obtainmentTimestamp"
+  ).exec();
+
+  console.log(tokenData);
+
+  const handleRefresh = async ({
+    accessToken,
+    refreshToken,
+    expiresIn,
+    obtainmentTimestamp,
+  }) => {
+    tokenData = await Token.findOneAndUpdate(
+      { _id: 1 },
+      {
+        accessToken,
+        refreshToken,
+        expiresIn,
+        obtainmentTimestamp,
+      },
+      { new: true }
+    ).then(logger("Refreshed token data saved"));
+  };
+
+  return new RefreshingAuthProvider(
+    {
+      clientId: CLIENT_ID,
+      clientSecret: CLIENT_SECRET,
+      onRefresh: async (newTokenData) => await handleRefresh(newTokenData),
+    },
+    tokenData
+  );
 };

@@ -1,13 +1,13 @@
 import { mongoose } from "mongoose";
 
-export const configSchema = new mongoose.Schema({
-  _id: Number,
-  token: {
-    access: {
+export const tokenSchema = new mongoose.Schema(
+  {
+    _id: Number,
+    accessToken: {
       type: String,
       required: true,
     },
-    refresh: {
+    refreshToken: {
       type: String,
       required: true,
     },
@@ -20,27 +20,21 @@ export const configSchema = new mongoose.Schema({
       required: true,
     },
   },
-  client: {
-    id: {
-      type: String,
-      required: true,
-    },
-    secret: {
-      type: String,
-      required: true,
-    },
-  },
-});
+  { timestamps: true }
+);
 
-export const eventSchema = new mongoose.Schema({
-  date: { type: Date, default: Date.now },
-  type: {
-    type: String,
-    enum: ["SUB", "HOST", "FOLLOW"],
-    required: true,
+export const eventSchema = new mongoose.Schema(
+  {
+    date: { type: Date, default: Date.now },
+    type: {
+      type: String,
+      enum: ["SUB", "HOST", "FOLLOW"],
+      required: true,
+    },
+    user: {
+      type: String,
+      required: true,
+    },
   },
-  user: {
-    type: String,
-    required: true,
-  },
-});
+  { timestamps: true }
+);
