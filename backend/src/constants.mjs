@@ -59,26 +59,16 @@ export const initDatabase = async () => {
 };
 
 export const refreshingAuthProvider = async () => {
-  let tokenData = await Token.findById(
-    1,
-    "accessToken refreshToken expiresIn obtainmentTimestamp"
-  ).exec();
+  let tokenData = JSON.stringify(await Token.findById(1).exec());
 
-  console.log(tokenData);
-
-  const handleRefresh = async ({
-    accessToken,
-    refreshToken,
-    expiresIn,
-    obtainmentTimestamp,
-  }) => {
+  const handleRefresh = async (newTokenData) => {
     tokenData = await Token.findOneAndUpdate(
       { _id: 1 },
       {
-        accessToken,
-        refreshToken,
-        expiresIn,
-        obtainmentTimestamp,
+        accessToken: newTokenData.accessToken,
+        refreshToken: newTokenData.refreshToken,
+        expiresIn: newTokenData.expiresIn,
+        obtainmentTimestamp: newTokenData.obtainmentTimestamp,
       },
       { new: true }
     ).then(logger("Refreshed token data saved"));
@@ -88,8 +78,8 @@ export const refreshingAuthProvider = async () => {
     {
       clientId: CLIENT_ID,
       clientSecret: CLIENT_SECRET,
-      onRefresh: async (newTokenData) => await handleRefresh(newTokenData),
+      onRefresh: (newTokenData) => handleRefresh(newTokenData),
     },
-    tokenData
+    JSON.parse(tokenData)
   );
 };

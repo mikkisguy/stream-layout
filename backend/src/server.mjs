@@ -1,37 +1,27 @@
 import express from "express";
 import { mongoose } from "mongoose";
-import {
-  USER_ID,
-  logger,
-  initDatabase,
-  refreshingAuthProvider,
-} from "./constants.mjs";
+import { logger, initDatabase, refreshingAuthProvider } from "./constants.mjs";
 import { ApiClient } from "@twurple/api";
 
 const app = express();
 
 let authProvider;
 
+// Load auth
 app.use(async (req, res, next) => {
   authProvider = await refreshingAuthProvider();
+
   next();
 });
 
 app.get("/latest", async (req, res) => {
   logger("Received GET request /latest");
 
-  console.log(JSON.stringify(authProvider, null, 2));
+  const apiClient = new ApiClient({ authProvider });
 
-  const apiClient = new ApiClient({
-    authProvider,
-    logger: {
-      minLevel: "debug",
-    },
-  });
+  const user = await apiClient.users.getUserByName("mikkisguy");
 
-  const jee = await apiClient.users.getUserById(USER_ID);
-
-  return res.send(jee);
+  return res.send({ description: user.description });
 });
 
 app.listen(4000, () => {
