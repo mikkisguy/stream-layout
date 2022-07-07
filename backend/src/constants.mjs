@@ -2,12 +2,15 @@ import { format } from "date-fns";
 import { mongoose } from "mongoose";
 import { configSchema } from "./schemas.mjs";
 
+const DB_NAME = process.env.DB_NAME;
+const DB_USER = process.env.DB_USER;
 const DB_PASSWORD = process.env.DB_PASSWORD;
-const DB_CONNECTION_STRING = `mongodb://mikkisguy:${DB_PASSWORD}@localhost:27017/mikkisguy-stream`;
 const INITIAL_ACCESS_TOKEN = process.env.INITIAL_ACCESS_TOKEN;
 const INITIAL_REFRESH_TOKEN = process.env.INITIAL_REFRESH_TOKEN;
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
+
+const DB_CONNECTION_STRING = `mongodb://${DB_USER}:${DB_PASSWORD}@localhost:27017/${DB_NAME}`;
 
 export const logger = (message, error = false) => {
   const date = format(new Date(), "yyyy-MM-dd HH:mm:ss");
