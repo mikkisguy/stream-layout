@@ -1,7 +1,10 @@
 import { format } from "date-fns";
 import { mongoose } from "mongoose";
 import { tokenSchema } from "./schemas.mjs";
-import { RefreshingAuthProvider } from "@twurple/auth";
+import {
+  RefreshingAuthProvider,
+  ClientCredentialsAuthProvider,
+} from "@twurple/auth";
 
 export const USER_ID = "140442943";
 export const USER_NAME = "mikkisguy";
@@ -59,7 +62,11 @@ export const initDatabase = async () => {
   }
 };
 
-export const refreshingAuthProvider = async () => {
+export const getAuthProvider = async (asClientCredentials = false) => {
+  if (asClientCredentials) {
+    return new ClientCredentialsAuthProvider(CLIENT_ID, CLIENT_SECRET);
+  }
+
   let tokenData = JSON.stringify(await Token.findById(1).exec());
 
   const handleRefresh = async (newTokenData) => {

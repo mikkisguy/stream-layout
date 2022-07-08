@@ -4,7 +4,7 @@ import {
   USER_NAME,
   logger,
   initDatabase,
-  refreshingAuthProvider,
+  getAuthProvider,
 } from "./constants.mjs";
 import { ApiClient } from "@twurple/api";
 
@@ -14,7 +14,7 @@ let authProvider;
 
 // Load auth before every request
 app.use(async (req, res, next) => {
-  authProvider = await refreshingAuthProvider();
+  authProvider = await getAuthProvider();
 
   next();
 });
