@@ -5,6 +5,7 @@ import { Link, Outlet } from "react-router-dom";
 import { IS_DEVELOPMENT, API_URL, JWT_TOKEN } from "./constants";
 import { useEffect } from "react";
 import axios from "axios";
+import { io } from "socket.io-client";
 
 const getDesc = async () => {
   try {
@@ -17,9 +18,20 @@ const getDesc = async () => {
   }
 };
 
+const socketYes = () => {
+  const socket = io(`${API_URL}`, {
+    auth: { token: `Bearer ${JWT_TOKEN}` },
+    path: "/socket/",
+  });
+
+  socket.on("connect", () => {
+    console.log("Socket.io connected with id:", socket.id);
+  });
+};
+
 const App = () => {
   useEffect(() => {
-    getDesc();
+    socketYes();
   }, []);
 
   return (
