@@ -2,12 +2,10 @@ import * as path from "path";
 import { fileURLToPath } from "url";
 
 export const ENV = process.env.NODE_ENV;
-
 export const IS_PRODUCTION = ENV === "production";
-
 export const DIR_NAME = path.dirname(fileURLToPath(import.meta.url));
-
 export const SERVER_PORT = process.env.SERVER_PORT;
+export const SOCKET_IO = "Socket.io:";
 
 export const SSL = {
   CERT_PATH: process.env.SSL_CERT_PATH,
@@ -17,7 +15,8 @@ export const SSL = {
 export const JWT = {
   KEY_PATH: process.env.JWT_KEY_PATH,
   ISSUER: `${process.env.JWT_ISSUER_URL}:${SERVER_PORT}`,
-  AUDIENCE: process.env.JWT_AUDIENCE
+  AUDIENCE: process.env.JWT_AUDIENCE,
+  ALGORITHM: "RS256"
 }
 
 export const USER = {

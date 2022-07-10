@@ -4,7 +4,8 @@ import {
   SERVER_PORT,
   USER,
   SSL,
-  JWT
+  JWT,
+  SOCKET_IO
 } from "./constants.mjs";
 import {
   logger,
@@ -19,14 +20,56 @@ import helmet from "helmet";
 import { expressjwt } from "express-jwt";
 import https from "https";
 import cors from "cors";
+import { Server } from "socket.io";
+import { authorize } from "@thream/socketio-jwt";
 
 let authProvider;
 
 const app = express();
 
+const httpsServer = https.createServer({
+  cert: getSecret(SSL.CERT_PATH),
+  key: getSecret(SSL.KEY_PATH)
+}, app);
+
+/************************** SOCKET.IO ******************************/
+
+const io = new Server(httpsServer, {
+  path: "/socket",
+  cors: {
+    origin: JWT.AUDIENCE,
+    methods: ["GET"]
+  }
+});
+
+io.use(
+  authorize({
+    secret: String(getSecret(JWT.KEY_PATH)),
+    algorithms: [JWT.ALGORITHM],
+  })
+)
+
+io.engine.on("connection_error", (err) => {
+  logger(`${SOCKET_IO} Connection error (${err.message})`, true);
+});
+
+io.on("connection", (socket) => {
+  const clientAddress = socket.handshake.address;
+
+  logger(`${SOCKET_IO} Client connected (${clientAddress})`);
+
+  socket.on("disconnect", () => {
+    logger(`${SOCKET_IO} Client disconnected (${clientAddress})`);
+  });
+});
+
+/************************** EXPRESS ******************************/
+
 app.use(helmet());
 
 app.use(cors({ origin: JWT.AUDIENCE }));
+
+app.use(expressjwt(getJwtOptions(true)).unless({ path: ["/socket/"] }));
 
 app.use(async (req, _, next) => {
   try {
@@ -47,8 +90,6 @@ app.use(async (req, _, next) => {
   }
 });
 
-app.use(expressjwt(getJwtOptions(true)));
-
 app.get("/latest", async (_, res, next) => {
   try {
     const apiClient = new ApiClient({ authProvider });
@@ -64,12 +105,10 @@ app.get("/latest", async (_, res, next) => {
 
 app.use(requestErrorHandler);
 
-const server = https.createServer({
-  cert: getSecret(SSL.CERT_PATH),
-  key: getSecret(SSL.KEY_PATH)
-}, app);
 
-server.listen(SERVER_PORT, () => {
+/************************** SERVER ******************************/
+
+httpsServer.listen(SERVER_PORT, () => {
   logger("*** SERVER RUNNING ***");
 
   initDatabase();

@@ -13,8 +13,7 @@ import {
   INITIAL,
   CLIENT,
   DIR_NAME,
-  JWT,
-  SSL
+  JWT
 } from "./constants.mjs"
 import jwt from "jsonwebtoken"
 const { sign: jwtSign } = jwt;
@@ -34,6 +33,7 @@ export const requestErrorHandler = (error, request, response, next) => {
   const status = error.status || 500;
 
   if (response.headersSent) {
+    logger("Headers already sent");
     return next(error);
   }
 
@@ -112,13 +112,11 @@ export const getSecret = (filePath) => {
 }
 
 export const getJwtOptions = (comingRequest = false) => {
-  const algorithm = "RS256";
-
   const specificOptions = comingRequest ? {
     secret: getSecret(JWT.KEY_PATH),
-    algorithms: [algorithm],
+    algorithms: [JWT.ALGORITHM],
   } : {
-    algorithm: algorithm,
+    algorithm: JWT.ALGORITHM,
     expiresIn: "24h"
   }
 
