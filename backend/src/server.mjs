@@ -1,19 +1,13 @@
 import express from "express";
 import { mongoose } from "mongoose";
-import {
-  SERVER_PORT,
-  USER,
-  SSL,
-  JWT,
-  SOCKET_IO
-} from "./constants.mjs";
+import { SERVER_PORT, USER, SSL, JWT, SOCKET_IO } from "./constants.mjs";
 import {
   logger,
   requestErrorHandler,
   initDatabase,
   getAuthProvider,
   getJwtOptions,
-  getSecret
+  getSecret,
 } from "./utils.mjs";
 import { ApiClient } from "@twurple/api";
 import helmet from "helmet";
@@ -27,10 +21,13 @@ let authProvider;
 
 const app = express();
 
-const httpsServer = https.createServer({
-  cert: getSecret(SSL.CERT_PATH),
-  key: getSecret(SSL.KEY_PATH)
-}, app);
+const httpsServer = https.createServer(
+  {
+    cert: getSecret(SSL.CERT_PATH),
+    key: getSecret(SSL.KEY_PATH),
+  },
+  app
+);
 
 /************************** SOCKET.IO ******************************/
 
@@ -38,8 +35,8 @@ const io = new Server(httpsServer, {
   path: "/socket",
   cors: {
     origin: JWT.AUDIENCE,
-    methods: ["GET"]
-  }
+    methods: ["GET"],
+  },
 });
 
 io.use(
@@ -47,7 +44,7 @@ io.use(
     secret: String(getSecret(JWT.KEY_PATH)),
     algorithms: [JWT.ALGORITHM],
   })
-)
+);
 
 io.engine.on("connection_error", (err) => {
   logger(`${SOCKET_IO} Connection error (${err.message})`, true);
@@ -75,7 +72,7 @@ app.use(async (req, _, next) => {
   try {
     logger(`-> Received ${req.method} ${req.path}`);
 
-    process.on("warning", e => logger(e.stack));
+    process.on("warning", (e) => logger(e.stack));
 
     mongoose.connection.on("error", (error) => logger(error, true));
 
@@ -84,8 +81,7 @@ app.use(async (req, _, next) => {
     }
 
     next();
-  }
-  catch (error) {
+  } catch (error) {
     next(error);
   }
 });
@@ -97,14 +93,12 @@ app.get("/latest", async (_, res, next) => {
     const user = await apiClient.users.getUserByName(USER.NAME);
 
     return res.send({ description: user.description });
-  }
-  catch (error) {
+  } catch (error) {
     next(error);
   }
 });
 
 app.use(requestErrorHandler);
-
 
 /************************** SERVER ******************************/
 

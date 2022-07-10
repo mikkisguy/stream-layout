@@ -13,9 +13,9 @@ import {
   INITIAL,
   CLIENT,
   DIR_NAME,
-  JWT
-} from "./constants.mjs"
-import jwt from "jsonwebtoken"
+  JWT,
+} from "./constants.mjs";
+import jwt from "jsonwebtoken";
 const { sign: jwtSign } = jwt;
 
 // Create model (collection in MongoDB)
@@ -39,8 +39,7 @@ export const requestErrorHandler = (error, request, response, next) => {
 
   logger(errorLogMessage, true);
   response.sendStatus(status);
-}
-
+};
 
 export const initDatabase = async () => {
   try {
@@ -109,22 +108,25 @@ export const getSecret = (filePath) => {
   const fullPath = path.join(DIR_NAME, filePath);
 
   return fs.readFileSync(fullPath);
-}
+};
 
 export const getJwtOptions = (comingRequest = false) => {
-  const specificOptions = comingRequest ? {
-    secret: getSecret(JWT.KEY_PATH),
-    algorithms: [JWT.ALGORITHM],
-  } : {
-    algorithm: JWT.ALGORITHM,
-    expiresIn: "24h"
-  }
+  const specificOptions = comingRequest
+    ? {
+        secret: getSecret(JWT.KEY_PATH),
+        algorithms: [JWT.ALGORITHM],
+      }
+    : {
+        algorithm: JWT.ALGORITHM,
+        expiresIn: "24h",
+      };
 
   return {
     issuer: JWT.ISSUER,
     audience: IS_PRODUCTION ? JWT.AUDIENCE : "",
-    ...specificOptions
-  }
-}
+    ...specificOptions,
+  };
+};
 
-export const getJwtToken = () => jwtSign({}, getSecret(JWT.KEY_PATH), getJwtOptions());
+export const getJwtToken = () =>
+  jwtSign({}, getSecret(JWT.KEY_PATH), getJwtOptions());
