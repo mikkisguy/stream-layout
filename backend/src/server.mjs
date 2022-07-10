@@ -3,8 +3,8 @@ import { mongoose } from "mongoose";
 import {
   SERVER_PORT,
   USER,
-  IS_PRODUCTION,
-  SSL
+  SSL,
+  JWT
 } from "./constants.mjs";
 import {
   logger,
@@ -12,19 +12,21 @@ import {
   initDatabase,
   getAuthProvider,
   getJwtOptions,
-  getJwtToken,
   getSecret
-} from "./utils.mjs"
+} from "./utils.mjs";
 import { ApiClient } from "@twurple/api";
 import helmet from "helmet";
 import { expressjwt } from "express-jwt";
 import https from "https";
+import cors from "cors";
 
 let authProvider;
 
 const app = express();
 
 app.use(helmet());
+
+app.use(cors({ origin: JWT.AUDIENCE }));
 
 app.use(async (req, _, next) => {
   try {
@@ -36,10 +38,6 @@ app.use(async (req, _, next) => {
 
     if (req.path !== "/") {
       authProvider = await getAuthProvider();
-    }
-
-    if (!IS_PRODUCTION) {
-      logger(`Bearer ${getJwtToken()}`);
     }
 
     next();
