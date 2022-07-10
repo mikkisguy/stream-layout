@@ -1,6 +1,6 @@
 import { mongoose } from "mongoose";
 
-export const tokenSchema = new mongoose.Schema(
+export const twitchTokenSchema = new mongoose.Schema(
   {
     _id: Number,
     accessToken: {

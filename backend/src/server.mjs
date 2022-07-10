@@ -1,39 +1,78 @@
 import express from "express";
 import { mongoose } from "mongoose";
 import {
-  USER_NAME,
+  SERVER_PORT,
+  USER,
+  IS_PRODUCTION,
+  SSL
+} from "./constants.mjs";
+import {
   logger,
+  requestErrorHandler,
   initDatabase,
   getAuthProvider,
-} from "./constants.mjs";
+  getJwtOptions,
+  getJwtToken,
+  getSecret
+} from "./utils.mjs"
 import { ApiClient } from "@twurple/api";
-
-const app = express();
+import helmet from "helmet";
+import { expressjwt } from "express-jwt";
+import https from "https";
 
 let authProvider;
 
-// Load auth before every request
-app.use(async (req, res, next) => {
-  authProvider = await getAuthProvider();
+const app = express();
 
-  next();
+app.use(helmet());
+
+app.use(async (req, _, next) => {
+  try {
+    logger(`-> Received ${req.method} ${req.path}`);
+
+    process.on("warning", e => logger(e.stack));
+
+    mongoose.connection.on("error", (error) => logger(error, true));
+
+    if (req.path !== "/") {
+      authProvider = await getAuthProvider();
+    }
+
+    if (!IS_PRODUCTION) {
+      logger(`Bearer ${getJwtToken()}`);
+    }
+
+    next();
+  }
+  catch (error) {
+    next(error);
+  }
 });
 
-app.get("/latest", async (req, res) => {
-  logger("Received GET request /latest");
+app.use(expressjwt(getJwtOptions(true)));
 
-  const apiClient = new ApiClient({ authProvider });
+app.get("/latest", async (_, res, next) => {
+  try {
+    const apiClient = new ApiClient({ authProvider });
 
-  const user = await apiClient.users.getUserByName(USER_NAME);
+    const user = await apiClient.users.getUserByName(USER.NAME);
 
-  return res.send({ description: user.description });
+    return res.send({ description: user.description });
+  }
+  catch (error) {
+    next(error);
+  }
 });
 
-app.listen(4000, () => {
+app.use(requestErrorHandler);
+
+const server = https.createServer({
+  cert: getSecret(SSL.CERT_PATH),
+  key: getSecret(SSL.KEY_PATH)
+}, app);
+
+server.listen(SERVER_PORT, () => {
   logger("*** SERVER RUNNING ***");
-  initDatabase();
 
-  mongoose.connection.on("error", (error) => {
-    logger(error, true);
-  });
+  initDatabase();
 });

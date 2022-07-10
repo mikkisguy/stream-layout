@@ -1,93 +1,44 @@
-import { format } from "date-fns";
-import { mongoose } from "mongoose";
-import { tokenSchema } from "./schemas.mjs";
-import {
-  RefreshingAuthProvider,
-  ClientCredentialsAuthProvider,
-} from "@twurple/auth";
+import * as path from "path";
+import { fileURLToPath } from "url";
 
-export const USER_ID = "140442943";
-export const USER_NAME = "mikkisguy";
+export const ENV = process.env.NODE_ENV;
 
-const DB_NAME = process.env.DB_NAME;
-const DB_USER = process.env.DB_USER;
-const DB_PASSWORD = process.env.DB_PASSWORD;
-const INITIAL_ACCESS_TOKEN = process.env.INITIAL_ACCESS_TOKEN;
-const INITIAL_REFRESH_TOKEN = process.env.INITIAL_REFRESH_TOKEN;
-const CLIENT_ID = process.env.CLIENT_ID;
-const CLIENT_SECRET = process.env.CLIENT_SECRET;
+export const IS_PRODUCTION = ENV === "production";
 
-const DB_CONNECTION_STRING = `mongodb://${DB_USER}:${DB_PASSWORD}@localhost:27017/${DB_NAME}`;
+export const DIR_NAME = path.dirname(fileURLToPath(import.meta.url));
 
-// Create model (collection in MongoDB)
-const Token = mongoose.model("Token", tokenSchema);
+export const SERVER_PORT = process.env.SERVER_PORT;
 
-export const logger = (message, error = false) => {
-  const date = format(new Date(), "yyyy-MM-dd HH:mm:ss");
-  const type = error ? "ERROR" : "INFO";
+export const SSL = {
+  CERT_PATH: process.env.SSL_CERT_PATH,
+  KEY_PATH: process.env.SSL_KEY_PATH
+}
 
-  return console.log(`${date} | ${type} | ${message}`);
-};
+export const JWT = {
+  KEY_PATH: process.env.JWT_KEY_PATH,
+  ISSUER: `${process.env.JWT_ISSUER_URL}:${SERVER_PORT}`,
+  AUDIENCE: process.env.JWT_AUDIENCE
+}
 
-export const initDatabase = async () => {
-  try {
-    mongoose.connect(DB_CONNECTION_STRING);
-  } catch (error) {
-    logger(error, true);
-  }
+export const USER = {
+  ID: "140442943",
+  NAME: "mikkisguy"
+}
 
-  await mongoose.connection.on("connected", () => logger("Database connected"));
+export const DB = {
+  NAME: process.env.DB_NAME,
+  USER: process.env.DB_USER,
+  PASSWORD: process.env.DB_PASSWORD,
+}
 
-  // Check if token data is already initialized
-  const initCheck = await Token.findById(1).exec();
+export const DB_CONNECTION_STRING = `mongodb://${DB.USER}:${DB.PASSWORD}@localhost:27017/${DB.NAME}`;
 
-  if (initCheck == undefined) {
-    // Set initial token data
-    const initialTokenData = new Token({
-      _id: 1,
-      accessToken: INITIAL_ACCESS_TOKEN,
-      refreshToken: INITIAL_REFRESH_TOKEN,
-      expiresIn: 0,
-      obtainmentTimestamp: 0,
-    });
+export const INITIAL = {
+  ACCESS_TOKEN: process.env.INITIAL_ACCESS_TOKEN,
+  REFRESH_TOKEN: process.env.INITIAL_REFRESH_TOKEN
+}
 
-    // Save to database
-    await initialTokenData.save().then((saved) => {
-      if (saved === initialTokenData) {
-        logger("Initial token data saved");
-      }
-    });
-  } else {
-    return logger("Token data already initialized");
-  }
-};
-
-export const getAuthProvider = async (asClientCredentials = false) => {
-  if (asClientCredentials) {
-    return new ClientCredentialsAuthProvider(CLIENT_ID, CLIENT_SECRET);
-  }
-
-  let tokenData = JSON.stringify(await Token.findById(1).exec());
-
-  const handleRefresh = async (newTokenData) => {
-    tokenData = await Token.findOneAndUpdate(
-      { _id: 1 },
-      {
-        accessToken: newTokenData.accessToken,
-        refreshToken: newTokenData.refreshToken,
-        expiresIn: newTokenData.expiresIn,
-        obtainmentTimestamp: newTokenData.obtainmentTimestamp,
-      },
-      { new: true }
-    ).then(logger("Refreshed token data saved"));
-  };
-
-  return new RefreshingAuthProvider(
-    {
-      clientId: CLIENT_ID,
-      clientSecret: CLIENT_SECRET,
-      onRefresh: (newTokenData) => handleRefresh(newTokenData),
-    },
-    JSON.parse(tokenData)
-  );
-};
+export const CLIENT = {
+  ID: process.env.CLIENT_ID,
+  SECRET: process.env.CLIENT_SECRET
+}
