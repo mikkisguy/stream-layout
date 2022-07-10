@@ -4,6 +4,10 @@ import App from "./App";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Main from "./components/scenes/Main";
 import Secondary from "./components/scenes/Secondary";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
+
+const queryClient = new QueryClient();
 
 const Routing = () => {
   return (
@@ -28,6 +32,9 @@ const Routing = () => {
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <Routing />
+    <QueryClientProvider client={queryClient}>
+      <Routing />
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   </React.StrictMode>
 );
