@@ -12,7 +12,7 @@ USER stream-backend
 
 COPY --chown=stream-backend:stream-backend . .
 
-RUN npm install
+RUN npm ci
 
 FROM base AS env-dev
 EXPOSE ${DEV_PORT}
