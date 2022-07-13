@@ -2,38 +2,22 @@ import GlobalStyle from "./styles/globalStyle";
 import styled from "styled-components";
 import { resolution } from "./styles/variables";
 import { Link, Outlet } from "react-router-dom";
-import { IS_DEVELOPMENT, API_URL, JWT_TOKEN } from "./constants";
+import { IS_DEVELOPMENT, API_URL } from "./constants";
 import { useEffect } from "react";
 import axios from "axios";
-import { io } from "socket.io-client";
 
-const getDesc = async () => {
-  try {
-    const response = await axios.get(`${API_URL}/latest`, {
-      headers: { Authorization: `Bearer ${JWT_TOKEN}` },
-    });
-    console.log(response);
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-const socketYes = () => {
-  const socket = io(`${API_URL}`, {
-    auth: { token: `Bearer ${JWT_TOKEN}` },
-    path: "/socket/",
-  });
-
-  socket.on("connect", () => {
-    console.log("Socket.io connected with id:", socket.id);
-  });
-};
+// const getDesc = async () => {
+//   try {
+//     const response = await axios.get(`${API_URL}/latest`, {
+//       headers: { Authorization: `Bearer ${JWT_TOKEN}` },
+//     });
+//     console.log(response);
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
 
 const App = () => {
-  useEffect(() => {
-    socketYes();
-  }, []);
-
   return (
     <>
       <GlobalStyle />
