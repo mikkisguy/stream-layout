@@ -1,0 +1,10 @@
+node_modules
+yarn.lock
+
+Dockerfile
+.dockerignore
+
+.env.template
+.env
+
+*.md

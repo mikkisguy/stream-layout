@@ -1,23 +1,30 @@
 import express from "express";
 import { mongoose } from "mongoose";
-import { SERVER_PORT, USER, SSL, JWT, SOCKET_IO } from "./constants.mjs";
+import {
+  SERVER_PORT,
+  SSL,
+  JWT,
+  LOG_STYLING,
+  EVENT_TYPE,
+  USER,
+  IS_PRODUCTION,
+  DEV_PORT
+} from "./constants.mjs";
 import {
   logger,
   requestErrorHandler,
   initDatabase,
-  getAuthProvider,
   getJwtOptions,
   getSecret,
+  getAuthProvider,
+  latestEventHandler,
+  undefinedAsEmptyString
 } from "./utils.mjs";
-import { ApiClient } from "@twurple/api";
 import helmet from "helmet";
 import { expressjwt } from "express-jwt";
 import https from "https";
 import cors from "cors";
-import { Server } from "socket.io";
-import { authorize } from "@thream/socketio-jwt";
-
-let authProvider;
+import { ApiClient } from "@twurple/api";
 
 const app = express();
 
@@ -29,44 +36,11 @@ const httpsServer = https.createServer(
   app
 );
 
-/************************** SOCKET.IO ******************************/
-
-const io = new Server(httpsServer, {
-  path: "/socket",
-  cors: {
-    origin: JWT.AUDIENCE,
-    methods: ["GET"],
-  },
-});
-
-io.use(
-  authorize({
-    secret: String(getSecret(JWT.KEY_PATH)),
-    algorithms: [JWT.ALGORITHM],
-  })
-);
-
-io.engine.on("connection_error", (err) => {
-  logger(`${SOCKET_IO} Connection error (${err.message})`, true);
-});
-
-io.on("connection", (socket) => {
-  const clientAddress = socket.handshake.address;
-
-  logger(`${SOCKET_IO} Client connected (${clientAddress})`);
-
-  socket.on("disconnect", () => {
-    logger(`${SOCKET_IO} Client disconnected (${clientAddress})`);
-  });
-});
-
-/************************** EXPRESS ******************************/
-
 app.use(helmet());
 
 app.use(cors({ origin: JWT.AUDIENCE }));
 
-app.use(expressjwt(getJwtOptions(true)).unless({ path: ["/socket/"] }));
+app.use(expressjwt(getJwtOptions(true)).unless({ path: /\/no-auth/i }));
 
 app.use(async (req, _, next) => {
   try {
@@ -76,23 +50,63 @@ app.use(async (req, _, next) => {
 
     mongoose.connection.on("error", (error) => logger(error, true));
 
-    if (req.path !== "/") {
-      authProvider = await getAuthProvider();
-    }
-
     next();
   } catch (error) {
     next(error);
   }
 });
 
+app.get("/no-auth*", async (_, res) => res.end("/no-auth"));
+
 app.get("/latest", async (_, res, next) => {
   try {
+    const authProvider = await getAuthProvider();
     const apiClient = new ApiClient({ authProvider });
 
-    const user = await apiClient.users.getUserByName(USER.NAME);
+    // Subscribers
+    const { data: subscriberData } =
+      await apiClient.subscriptions.getSubscriptions(USER.ID);
 
-    return res.send({ description: user.description });
+    const subDisplayName = undefinedAsEmptyString(subscriberData[0].userDisplayName);
+
+    const subResponse = {
+      type: EVENT_TYPE.SUB,
+      displayName: subDisplayName,
+      otherData: {
+        isGift: subscriberData[0].isGift,
+        gifterDisplayName: subscriberData[0].gifterDisplayName,
+        tier: subscriberData[0].tier,
+      },
+    };
+
+    // Followers
+    const { data: followerData, total: followerCount } =
+      await apiClient.users.getFollows({ followedUser: USER.ID });
+
+    const followerDisplayName = undefinedAsEmptyString(followerData[0].userDisplayName);
+
+    const followResponse = {
+      type: EVENT_TYPE.FOLLOW,
+      displayName: followerDisplayName,
+      otherData: {
+        count: followerCount
+      },
+    };
+
+    // Check and save
+    const isNewSub = latestEventHandler(subResponse, next);
+    const isNewFollow = latestEventHandler(followResponse, next);
+
+    return res.send({
+      latestSub: {
+        isNew: isNewSub,
+        ...subResponse,
+      },
+      latestFollow: {
+        isNew: isNewFollow,
+        ...followResponse
+      },
+    });
   } catch (error) {
     next(error);
   }
@@ -100,10 +114,8 @@ app.get("/latest", async (_, res, next) => {
 
 app.use(requestErrorHandler);
 
-/************************** SERVER ******************************/
-
-httpsServer.listen(SERVER_PORT, () => {
-  logger("*** SERVER RUNNING ***");
+httpsServer.listen(IS_PRODUCTION ? SERVER_PORT : DEV_PORT, async () => {
+  logger(`${LOG_STYLING.UNDERSCORE}*** SERVER RUNNING ***${LOG_STYLING.RESET}`);
 
   initDatabase();
 });

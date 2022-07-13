@@ -1,0 +1,10 @@
+version: "3.5"
+
+services:
+  mikkisguy-stream-backend:
+    container_name: mikkisguy-stream-backend-dev
+    image: mikkisguy-stream-backend-dev
+    ports:
+      - $DEV_PORT:$DEV_PORT
+    volumes:
+      - ./backend:/stream-backend

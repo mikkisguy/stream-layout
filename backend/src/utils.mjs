@@ -1,10 +1,7 @@
-import { format, getUnixTime } from "date-fns";
+import { format } from "date-fns";
 import { mongoose } from "mongoose";
-import { twitchTokenSchema } from "./schemas.mjs";
-import {
-  RefreshingAuthProvider,
-  ClientCredentialsAuthProvider,
-} from "@twurple/auth";
+import { twitchTokenSchema, twitchEventSchema } from "./schemas.mjs";
+import { RefreshingAuthProvider } from "@twurple/auth";
 import * as fs from "fs";
 import * as path from "path";
 import {
@@ -14,6 +11,7 @@ import {
   CLIENT,
   DIR_NAME,
   JWT,
+  LOG_STYLING,
 } from "./constants.mjs";
 import jwt from "jsonwebtoken";
 const { sign: jwtSign } = jwt;
@@ -23,13 +21,14 @@ const TwitchToken = mongoose.model("TwitchToken", twitchTokenSchema);
 
 export const logger = (message, error = false) => {
   const date = format(new Date(), "yyyy-MM-dd HH:mm:ss");
-  const type = error ? "ERROR" : "INFO";
+  const type = error ? `${LOG_STYLING.RED}ERROR` : `${LOG_STYLING.CYAN}INFO`;
 
-  return console.log(`${date} | ${type} | ${message}`);
+  return console.log(`${date} | ${type}${LOG_STYLING.RESET} | ${message}`);
 };
 
 export const requestErrorHandler = (error, request, response, next) => {
-  const errorLogMessage = IS_PRODUCTION ? error.message : error.stack;
+  const errorLogMessage = `Request ${request.method} ${request.url} from ${request.ip
+    } -> ${IS_PRODUCTION ? error.message : error.stack}`;
   const status = error.status || 500;
 
   if (response.headersSent) {
@@ -38,6 +37,7 @@ export const requestErrorHandler = (error, request, response, next) => {
   }
 
   logger(errorLogMessage, true);
+
   response.sendStatus(status);
 };
 
@@ -74,11 +74,7 @@ export const initDatabase = async () => {
   }
 };
 
-export const getAuthProvider = async (asClientCredentials = false) => {
-  if (asClientCredentials) {
-    return new ClientCredentialsAuthProvider(CLIENT.ID, CLIENT.SECRET);
-  }
-
+export const getAuthProvider = async () => {
   let tokenData = JSON.stringify(await TwitchToken.findById(1).exec());
 
   const handleRefresh = async (newTokenData) => {
@@ -113,13 +109,13 @@ export const getSecret = (filePath) => {
 export const getJwtOptions = (comingRequest = false) => {
   const specificOptions = comingRequest
     ? {
-        secret: getSecret(JWT.KEY_PATH),
-        algorithms: [JWT.ALGORITHM],
-      }
+      secret: getSecret(JWT.KEY_PATH),
+      algorithms: [JWT.ALGORITHM],
+    }
     : {
-        algorithm: JWT.ALGORITHM,
-        expiresIn: "24h",
-      };
+      algorithm: JWT.ALGORITHM,
+      expiresIn: "24h",
+    };
 
   return {
     issuer: JWT.ISSUER,
@@ -130,3 +126,33 @@ export const getJwtOptions = (comingRequest = false) => {
 
 export const getJwtToken = () =>
   jwtSign({}, getSecret(JWT.KEY_PATH), getJwtOptions());
+
+export const latestEventHandler = (data, next) => {
+  let isNew = false;
+  const TwitchEvent = mongoose.model("TwitchEvent", twitchEventSchema);
+
+  TwitchEvent.find(
+    data,
+    null,
+    {
+      sort: { createdAt: -1 },
+      limit: 1
+    },
+    async (error, event) => {
+      if (error) {
+        return next(error);
+      }
+
+      if (event.length === 0) {
+        const newEvent = new TwitchEvent(data);
+        await newEvent.save();
+
+        isNew = true;
+      }
+    }
+  );
+
+  return isNew;
+}
+
+export const undefinedAsEmptyString = (input) => input ? input : "";

@@ -1,0 +1,44 @@
+version: "3.5"
+
+services:
+  mikkisguy-stream-mongodb:
+    container_name: mikkisguy-stream-mongodb
+    image: mongo:5.0
+    command: mongod
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=$MONGO_INITDB_ROOT_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD=$MONGO_INITDB_ROOT_PASSWORD
+      - MONGO_INITDB_DATABASE=admin
+      - MONGO_USERNAME=$MONGO_USERNAME
+      - MONGO_PASSWORD=$MONGO_PASSWORD
+      - MONGO_DATABASE=$MONGO_DATABASE
+    volumes:
+      - ./database/mongo-init.sh:/docker-entrypoint-initdb.d/mongo-init.sh
+      - ./database/data:/data/db
+    restart: unless-stopped
+
+  mikkisguy-stream-backend:
+    depends_on:
+      - mikkisguy-stream-mongodb
+    container_name: mikkisguy-stream-backend
+    image: mikkisguy-stream-backend
+    env_file:
+      - .env
+    environment:
+      - SERVER_PORT=$SERVER_PORT
+      - DB_NAME=$MONGO_DATABASE
+      - DB_USER=$MONGO_USERNAME
+      - DB_PASSWORD=$MONGO_PASSWORD
+      - SSL_CERT_PATH=$SSL_CERT_PATH
+      - SSL_KEY_PATH=$SSL_KEY_PATH
+      - JWT_KEY_PATH=$JWT_KEY_PATH
+      - JWT_ISSUER=$JWT_ISSUER
+      - JWT_AUDIENCE=$JWT_AUDIENCE
+      - INITIAL_ACCESS_TOKEN=$INITIAL_ACCESS_TOKEN
+      - INITIAL_REFRESH_TOKEN=$INITIAL_REFRESH_TOKEN
+      - CLIENT_ID=$CLIENT_ID
+      - CLIENT_SECRET=$CLIENT_SECRET
+    ports:
+      - $SERVER_PORT:$SERVER_PORT

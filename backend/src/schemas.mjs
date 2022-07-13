@@ -1,4 +1,5 @@
 import { mongoose } from "mongoose";
+import { EVENT_TYPE_ENUMS } from "./constants.mjs";
 
 export const twitchTokenSchema = new mongoose.Schema(
   {
@@ -23,17 +24,19 @@ export const twitchTokenSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export const eventSchema = new mongoose.Schema(
+export const twitchEventSchema = new mongoose.Schema(
   {
-    date: { type: Date, default: Date.now },
     type: {
       type: String,
-      enum: ["SUB", "HOST", "FOLLOW"],
+      enum: EVENT_TYPE_ENUMS,
       required: true,
     },
-    user: {
+    displayName: {
       type: String,
       required: true,
+    },
+    otherData: {
+      type: Map,
     },
   },
   { timestamps: true }
