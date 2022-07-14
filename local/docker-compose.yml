@@ -5,7 +5,13 @@ services:
     image: node:16.16-alpine
     container_name: mikkisguy-stream-tokenapi
     build: ./token-api
-    command: yarn start
+    command:
+      - bin/ash/
+      - -c
+      - |
+        cd /stream-token-api
+        yarn start
+
     env_file:
       - .env
     environment:
