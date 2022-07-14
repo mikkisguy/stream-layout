@@ -23,4 +23,4 @@ services:
       - VITE_TOKEN_API_URL=http://mikkisguy-stream-tokenapi:7070
       - VITE_STREAM_API_URL=$VITE_STREAM_API_URL
     ports:
-      - 7000:7000
+      - 7000:80
