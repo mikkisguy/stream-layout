@@ -2,16 +2,8 @@ version: "3.5"
 
 services:
   mikkisguy-stream-tokenapi:
-    image: node:16.16-alpine
+    image: mikkisguy-stream-tokenapi
     container_name: mikkisguy-stream-tokenapi
-    build: ./token-api
-    command:
-      - bin/ash/
-      - -c
-      - |
-        cd /stream-token-api
-        yarn start
-
     env_file:
       - .env
     environment:
