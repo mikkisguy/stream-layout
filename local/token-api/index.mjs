@@ -7,8 +7,6 @@ const app = express();
 app.get("/token", async (_, res, next) => {
   try {
     const jwtOptions = {
-      issuer: "http://localhost:7070",
-      audience: "http://localhost:7000",
       expiresIn: "2m",
     };
 
