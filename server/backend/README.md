@@ -65,4 +65,5 @@ export const handleEvent = async (eventType, eventData, io) => {
 
 // constants.mjs
 export const EVENTSUB_SECRET = process.env.EVENTSUB_SECRET;
+export const SERVER_URL = `${process.env.JWT_ISSUER_URL}`;
 ```

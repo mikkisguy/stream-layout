@@ -10,11 +10,8 @@ import {
   INITIAL,
   CLIENT,
   DIR_NAME,
-  JWT,
   LOG_STYLING,
 } from "./constants.mjs";
-import jwt from "jsonwebtoken";
-const { sign: jwtSign } = jwt;
 
 // Create model (collection in MongoDB)
 const TwitchToken = mongoose.model("TwitchToken", twitchTokenSchema);
@@ -105,27 +102,6 @@ export const getSecret = (filePath) => {
 
   return fs.readFileSync(fullPath);
 };
-
-export const getJwtOptions = (comingRequest = false) => {
-  const specificOptions = comingRequest
-    ? {
-      secret: getSecret(JWT.KEY_PATH),
-      algorithms: [JWT.ALGORITHM],
-    }
-    : {
-      algorithm: JWT.ALGORITHM,
-      expiresIn: "24h",
-    };
-
-  return {
-    issuer: JWT.ISSUER,
-    audience: IS_PRODUCTION ? JWT.AUDIENCE : "",
-    ...specificOptions,
-  };
-};
-
-export const getJwtToken = () =>
-  jwtSign({}, getSecret(JWT.KEY_PATH), getJwtOptions());
 
 export const latestEventHandler = (data, next) => {
   let isNew = false;

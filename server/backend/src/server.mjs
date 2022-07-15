@@ -8,13 +8,13 @@ import {
   EVENT_TYPE,
   USER,
   IS_PRODUCTION,
-  DEV_PORT
+  DEV_PORT,
+  REACT_URL
 } from "./constants.mjs";
 import {
   logger,
   requestErrorHandler,
   initDatabase,
-  getJwtOptions,
   getSecret,
   getAuthProvider,
   latestEventHandler,
@@ -38,9 +38,12 @@ const httpsServer = https.createServer(
 
 app.use(helmet());
 
-app.use(cors({ origin: JWT.AUDIENCE }));
+app.use(cors({ origin: REACT_URL }));
 
-app.use(expressjwt(getJwtOptions(true)).unless({ path: /\/no-auth/i }));
+app.use(
+  expressjwt({ secret: JWT.SECRET, algorithms: [JWT.ALGORITHM] })
+    .unless({ path: /\/no-auth/i })
+);
 
 app.use(async (req, _, next) => {
   try {
