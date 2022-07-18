@@ -5,7 +5,7 @@ services:
     image: mikkisguy-stream-tokenapi
     container_name: mikkisguy-stream-tokenapi
     env_file:
-      - .env
+      - ./token-api/.env
     environment:
       - JWT_SECRET=$JWT_SECRET
       - NODE_ENV=production
