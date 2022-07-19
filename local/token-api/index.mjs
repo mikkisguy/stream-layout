@@ -1,10 +1,11 @@
 import express from "express";
 import jwt from "jsonwebtoken";
 const { sign: jwtSign } = jwt;
+import cors from "cors";
 
 const app = express();
 
-app.get("/token", async (_, res, next) => {
+app.get("/token", cors(), async (_, res, next) => {
   try {
     const jwtOptions = {
       expiresIn: "2m",
@@ -13,8 +14,7 @@ app.get("/token", async (_, res, next) => {
     const signedJwt = jwtSign({}, process.env.JWT_SECRET, jwtOptions);
 
     res.send({ token: signedJwt });
-  }
-  catch (error) {
+  } catch (error) {
     next(error);
   }
 });
@@ -25,7 +25,9 @@ app.use((error, request, response, next) => {
     next(error);
   }
 
-  console.error(`==> Request ${request.method} ${request.url} -> ${error.stack}`);
+  console.error(
+    `==> Request ${request.method} ${request.url} -> ${error.stack}`
+  );
 
   response.sendStatus(error.status || 500);
 });
