@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { colors } from "../../styles/variables";
 import infoJson from "../../data/info.json";
 import { useState, useEffect } from "react";
+import { MINUTE, SECOND } from "../../constants";
 
 const InfoCards = () => {
   /* TODO: Fade in/out Twitter, YouTube etc info 
@@ -11,7 +12,7 @@ const InfoCards = () => {
   const [infoIndex, setInfoIndex] = useState(0);
   const [currentInfo, setCurrentInfo] = useState(infoJson[infoKeys[0]]);
   const [showCard, setShowCard] = useState(true);
-  const milliseconds = showCard ? 8000 : 300000; // show: 8000, hide: 300000 = 5min
+  const milliseconds = showCard ? SECOND * 8 : MINUTE * 5;
 
   useEffect(() => {
     const infoCardTimer = setTimeout(() => {

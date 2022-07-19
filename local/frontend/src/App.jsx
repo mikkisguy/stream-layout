@@ -2,9 +2,10 @@ import GlobalStyle from "./styles/globalStyle";
 import styled from "styled-components";
 import { resolution } from "./styles/variables";
 import { Link, Outlet } from "react-router-dom";
-import { IS_DEVELOPMENT, API_URL } from "./constants";
+import { IS_DEVELOPMENT } from "./constants";
 import { useEffect } from "react";
 import axios from "axios";
+import useToken from "./hooks/useToken.js";
 
 // const getDesc = async () => {
 //   try {
