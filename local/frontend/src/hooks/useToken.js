@@ -1,29 +1,17 @@
-import { MINUTE, TOKEN_API_URL } from "../constants";
-import axios from "axios";
-import { useState } from "react";
+import { TOKEN_API_URL } from "../constants";
 import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 const useToken = () => {
-  const [token, setToken] = useState("");
-
-  const { isError, isSuccess, error, data } = useQuery(
-    ["token"],
-    () => axios(TOKEN_API_URL),
-    {
-      refetchInterval: MINUTE * 1.75,
-      refetchIntervalInBackground: true,
-    }
+  const { data, error, isError, isSuccess } = useQuery(["token-api"], () =>
+    axios(TOKEN_API_URL)
   );
 
   if (isError) {
     throw new Error(error);
   }
 
-  if (isSuccess) {
-    setToken(data.data.token);
-  }
-
-  return token;
+  return { data, isSuccess };
 };
 
 export default useToken;

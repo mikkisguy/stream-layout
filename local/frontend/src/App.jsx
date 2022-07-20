@@ -3,20 +3,6 @@ import styled from "styled-components";
 import { resolution } from "./styles/variables";
 import { Link, Outlet } from "react-router-dom";
 import { IS_DEVELOPMENT } from "./constants";
-import { useEffect } from "react";
-import axios from "axios";
-import useToken from "./hooks/useToken.js";
-
-// const getDesc = async () => {
-//   try {
-//     const response = await axios.get(`${API_URL}/latest`, {
-//       headers: { Authorization: `Bearer ${JWT_TOKEN}` },
-//     });
-//     console.log(response);
-//   } catch (error) {
-//     console.error(error);
-//   }
-// };
 
 const App = () => {
   return (

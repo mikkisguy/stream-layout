@@ -8,7 +8,7 @@ const app = express();
 app.get("/token", cors(), async (_, res, next) => {
   try {
     const jwtOptions = {
-      expiresIn: "2m",
+      expiresIn: process.env.JWT_EXPIRE,
     };
 
     const signedJwt = jwtSign({}, process.env.JWT_SECRET, jwtOptions);
