@@ -6,7 +6,6 @@ export const IS_PRODUCTION = ENV === "production";
 export const DIR_NAME = path.dirname(fileURLToPath(import.meta.url));
 export const SERVER_PORT = process.env.SERVER_PORT;
 export const DEV_PORT = process.env.DEV_PORT;
-export const REACT_URL = process.env.REACT_URL;
 
 export const SSL = {
   CERT_PATH: process.env.SSL_CERT_PATH,

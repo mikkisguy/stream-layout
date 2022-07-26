@@ -8,8 +8,7 @@ import {
   EVENT_TYPE,
   USER,
   IS_PRODUCTION,
-  DEV_PORT,
-  REACT_URL
+  DEV_PORT
 } from "./constants.mjs";
 import {
   logger,
@@ -38,7 +37,7 @@ const httpsServer = https.createServer(
 
 app.use(helmet());
 
-app.use(cors({ origin: REACT_URL }));
+app.use(cors({ origin: ["http://localhost:3000", "http://localhost:7000"] }));
 
 app.use(
   expressjwt({ secret: JWT.SECRET, algorithms: [JWT.ALGORITHM] })

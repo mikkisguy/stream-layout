@@ -28,7 +28,6 @@ services:
       - .env
     environment:
       - SERVER_PORT=$SERVER_PORT
-      - REACT_URL=$REACT_URL
       - DB_NAME=$MONGO_DATABASE
       - DB_USER=$MONGO_USERNAME
       - DB_PASSWORD=$MONGO_PASSWORD
