@@ -115,6 +115,35 @@ app.get("/latest", async (_, res, next) => {
   }
 });
 
+app.get("/latest-mock", async (_, res, next) => {
+  const getRand = () => Math.floor(Math.random() * 6);
+
+  try {
+    return res.send({
+      latestSub: {
+        isNew: getRand() === 1,
+        type: "SUB",
+        displayName: getRand() === 1 ? "Subaaja93" : "tilaaja_",
+        otherData: {
+          isGift: getRand() === 1,
+          gifterDisplayName: "",
+          tier: "1000"
+        }
+      },
+      latestFollow: {
+        isNew: getRand() === 1,
+        type: "FOLLOW",
+        displayName: getRand() === 1 ? "Seuraaja-" : "follower1000",
+        otherData: {
+          count: 158
+        }
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
 app.use(requestErrorHandler);
 
 httpsServer.listen(IS_PRODUCTION ? SERVER_PORT : DEV_PORT, async () => {
