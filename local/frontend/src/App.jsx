@@ -2,9 +2,46 @@ import GlobalStyle from "./styles/globalStyle";
 import styled from "styled-components";
 import { resolution } from "./styles/variables";
 import { Link, Outlet } from "react-router-dom";
-import { IS_DEVELOPMENT } from "./constants";
+import { IS_DEVELOPMENT, MINUTE, SECOND } from "./constants";
+import infoJson from "./data/info.json";
+import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
+import InfoToast from "./components/shared/InfoToast";
 
 const App = () => {
+  const infoKeys = Object.keys(infoJson);
+  const [infoIndex, setInfoIndex] = useState(-1);
+  const [toggleInfo, setToggleInfo] = useState(true);
+  const milliseconds = toggleInfo ? SECOND * 5 : SECOND * 8;
+
+  useEffect(() => {
+    const infoTimer = setTimeout(() => {
+      setToggleInfo(!toggleInfo);
+
+      if (toggleInfo) {
+        const nextIndex = () => {
+          if (infoIndex === infoKeys.length - 1) {
+            return 0;
+          }
+
+          return infoIndex + 1;
+        };
+
+        setInfoIndex(nextIndex());
+
+        const currentInfo = infoJson[infoKeys[nextIndex()]];
+
+        toast(<InfoToast info={currentInfo} />, {
+          progressStyle: {
+            background: currentInfo.color,
+          },
+        });
+      }
+    }, milliseconds);
+
+    return () => clearTimeout(infoTimer);
+  });
+
   return (
     <>
       <GlobalStyle />

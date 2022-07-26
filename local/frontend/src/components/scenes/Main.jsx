@@ -1,5 +1,4 @@
 import HeaderBar from "../shared/HeaderBar";
-import InfoCards from "../shared/InfoCards";
 
 const Main = ({
   fullWidthBar = false,
@@ -19,7 +18,6 @@ const Main = ({
   return (
     <>
       <HeaderBar />
-      <InfoCards />
     </>
   );
 };

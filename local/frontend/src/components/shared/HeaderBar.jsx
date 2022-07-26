@@ -2,22 +2,45 @@ import styled from "styled-components";
 import mikkisGuyHead from "../../assets/images/mikkisguyHead.png";
 import { colors } from "../../styles/variables";
 import useLatest from "../../hooks/useLatest";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
+import EventToast from "./EventToast";
 
 const HeaderBar = () => {
-  /* TODO: Slots system, issue #5
-  - Can include components like
-  <Subscriber />
-  <Host />
-  <Follower />
-  <Counter />
-  */
   const { latestSub, latestFollow } = useLatest();
-  console.log(JSON.stringify(latestSub, null, 2));
-  console.log(JSON.stringify(latestFollow, null, 2));
+
+  useEffect(() => {
+    if (latestSub !== undefined || latestFollow !== undefined) {
+      if (latestSub.isNew) {
+        toast(<EventToast latest={latestSub} />);
+      }
+      if (latestFollow.isNew) {
+        toast(<EventToast latest={latestFollow} />);
+      }
+    }
+  }, [latestSub, latestFollow]);
 
   return (
     <HeaderBarContainer>
-      <MikkisGuyHead src={mikkisGuyHead} alt="" />
+      <div>
+        <p>Viimeisin tilaaja</p>
+        <p>{latestSub && latestSub.displayName}</p>
+      </div>
+      <div>
+        <p>Viimeisin hosti</p>
+        {/* Comes from StreamElements for now */}
+      </div>
+      <div>
+        <MikkisGuyHead src={mikkisGuyHead} alt="" />
+      </div>
+      <div>
+        <p>Viimeisin seuraaja</p>
+        <p>{latestFollow && latestFollow.displayName}</p>
+      </div>
+      <div>
+        <p>Seuraajatavoite</p>
+        <p>{latestFollow && latestFollow.otherData.count} / 200</p>
+      </div>
     </HeaderBarContainer>
   );
 };
@@ -25,6 +48,8 @@ const HeaderBar = () => {
 export default HeaderBar;
 
 const HeaderBarContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
   position: relative;
   align-self: center;
   height: 50px;
@@ -38,4 +63,10 @@ const MikkisGuyHead = styled.img`
   top: -25%;
   left: 47%;
   height: 78px;
+`;
+
+const EventNotification = styled.div`
+  display: ${({ show }) => (show ? "block" : "none")};
+  background-color: ${colors.gray};
+  color: ${colors.peach};
 `;

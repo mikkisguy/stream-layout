@@ -7,17 +7,17 @@
   "youtubeMain": {
     "title": "MikkisGuy YouTubessa",
     "content": "Minecraftia ja elämää",
-    "color": "#c00"
+    "color": "#ff0000"
   },
   "youtubeArchive": {
     "title": "MikkisGuy Arkisto",
     "content": "Striimitallenteet YouTubessa",
-    "color": "#c00"
+    "color": "#ff0000"
   },
   "instagram": {
     "title": "Seuraa Instagramissa",
     "content": "Minecraft silmäkarkkia",
-    "color": "#7b06e8"
+    "color": "#f97801"
   },
   "discord": {
     "title": "Liity Discordiin!",
