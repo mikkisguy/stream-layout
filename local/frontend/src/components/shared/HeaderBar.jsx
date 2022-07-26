@@ -4,6 +4,7 @@ import { colors } from "../../styles/variables";
 import useLatest from "../../hooks/useLatest";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
+import EventToast from "./EventToast";
 
 const HeaderBar = () => {
   const { latestSub, latestFollow } = useLatest();
@@ -11,10 +12,10 @@ const HeaderBar = () => {
   useEffect(() => {
     if (latestSub !== undefined || latestFollow !== undefined) {
       if (latestSub.isNew) {
-        toast(`Uusi tilaus! ${latestSub.displayName}`);
+        toast(<EventToast latest={latestSub} />);
       }
       if (latestFollow.isNew) {
-        toast(`Uusi seuraus! ${latestFollow.displayName}`);
+        toast(<EventToast latest={latestFollow} />);
       }
     }
   }, [latestSub, latestFollow]);

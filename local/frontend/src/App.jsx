@@ -6,6 +6,7 @@ import { IS_DEVELOPMENT, MINUTE, SECOND } from "./constants";
 import infoJson from "./data/info.json";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
+import InfoToast from "./components/shared/InfoToast";
 
 const App = () => {
   const infoKeys = Object.keys(infoJson);
@@ -30,7 +31,11 @@ const App = () => {
 
         const currentInfo = infoJson[infoKeys[nextIndex()]];
 
-        toast(currentInfo.title);
+        toast(<InfoToast info={currentInfo} />, {
+          progressStyle: {
+            background: currentInfo.color,
+          },
+        });
       }
     }, milliseconds);
 
