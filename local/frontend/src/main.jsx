@@ -8,6 +8,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ToastContainer, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
+import { IS_DEVELOPMENT } from "./constants";
 
 const queryClient = new QueryClient();
 
@@ -54,7 +55,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           background: "#ffffff",
         }}
       />
-      <ReactQueryDevtools />
+      {IS_DEVELOPMENT && <ReactQueryDevtools />}
     </QueryClientProvider>
   </React.StrictMode>
 );
