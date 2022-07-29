@@ -2,16 +2,23 @@ import express from "express";
 import jwt from "jsonwebtoken";
 const { sign: jwtSign } = jwt;
 import cors from "cors";
+import { v4 as uuid } from 'uuid';
 
 const app = express();
 
+app.locals.streamUUID = uuid();
+
 app.get("/token", cors(), async (_, res, next) => {
   try {
+    const jwtPayload = {
+      streamUUID: app.locals.streamUUID
+    }
+
     const jwtOptions = {
       expiresIn: process.env.JWT_EXPIRE,
     };
 
-    const signedJwt = jwtSign({}, process.env.JWT_SECRET, jwtOptions);
+    const signedJwt = jwtSign(jwtPayload, process.env.JWT_SECRET, jwtOptions);
 
     res.send({ token: signedJwt });
   } catch (error) {
