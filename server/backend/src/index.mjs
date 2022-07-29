@@ -95,7 +95,7 @@ app.get("/latest", async (req, res, next) => {
     const followResponse = {
       streamUUID: decodedJwt.streamUUID,
       type: EVENT_TYPE.FOLLOW,
-      displayName: Date.now().toString() + followerDisplayName,
+      displayName: followerDisplayName,
       otherData: {
         count: followerCount
       },
