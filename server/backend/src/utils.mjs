@@ -103,32 +103,35 @@ export const getSecret = (filePath) => {
   return fs.readFileSync(fullPath);
 };
 
-export const latestEventHandler = (data, next) => {
-  let isNew = false;
-  const TwitchEvent = mongoose.model("TwitchEvent", twitchEventSchema);
+export const latestEventHandler = async (data, next) => {
+  try {
+    const TwitchEvent = mongoose.model("TwitchEvent", twitchEventSchema);
 
-  TwitchEvent.find(
-    data,
-    null,
-    {
-      sort: { createdAt: -1 },
-      limit: 1
-    },
-    async (error, event) => {
-      if (error) {
-        return next(error);
+    let isNew;
+
+    const queryEvent = await TwitchEvent.find(
+      data,
+      null,
+      {
+        sort: { createdAt: -1 },
+        limit: 1
       }
+    ).exec();
 
-      if (event.length === 0) {
-        const newEvent = new TwitchEvent(data);
-        await newEvent.save();
+    if (queryEvent.length === 0) {
+      const newEvent = new TwitchEvent(data);
+      await newEvent.save();
 
-        isNew = true;
-      }
+      isNew = true;
     }
-  );
+    else {
+      isNew = false;
+    }
 
-  return isNew;
+    return isNew;
+  } catch (error) {
+    return next(error);
+  }
 }
 
 export const undefinedAsEmptyString = (input) => input ? input : "";

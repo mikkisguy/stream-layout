@@ -24,6 +24,8 @@ import { expressjwt } from "express-jwt";
 import https from "https";
 import cors from "cors";
 import { ApiClient } from "@twurple/api";
+import jwt from "jsonwebtoken";
+const { verify: jwtVerify } = jwt;
 
 const app = express();
 
@@ -60,10 +62,12 @@ app.use(async (req, _, next) => {
 
 app.get("/no-auth*", async (_, res) => res.end("/no-auth"));
 
-app.get("/latest", async (_, res, next) => {
+app.get("/latest", async (req, res, next) => {
   try {
     const authProvider = await getAuthProvider();
     const apiClient = new ApiClient({ authProvider });
+    const [_, token] = req.header("authorization").split(" ");
+    const decodedJwt = jwtVerify(token, JWT.SECRET);
 
     // Subscribers
     const { data: subscriberData } =
@@ -72,6 +76,7 @@ app.get("/latest", async (_, res, next) => {
     const subDisplayName = undefinedAsEmptyString(subscriberData[0].userDisplayName);
 
     const subResponse = {
+      streamUUID: decodedJwt.streamUUID,
       type: EVENT_TYPE.SUB,
       displayName: subDisplayName,
       otherData: {
@@ -88,16 +93,17 @@ app.get("/latest", async (_, res, next) => {
     const followerDisplayName = undefinedAsEmptyString(followerData[0].userDisplayName);
 
     const followResponse = {
+      streamUUID: decodedJwt.streamUUID,
       type: EVENT_TYPE.FOLLOW,
-      displayName: followerDisplayName,
+      displayName: Date.now().toString() + followerDisplayName,
       otherData: {
         count: followerCount
       },
     };
 
     // Check and save
-    const isNewSub = latestEventHandler(subResponse, next);
-    const isNewFollow = latestEventHandler(followResponse, next);
+    const isNewSub = await latestEventHandler(subResponse, next);
+    const isNewFollow = await latestEventHandler(followResponse, next);
 
     return res.send({
       latestSub: {

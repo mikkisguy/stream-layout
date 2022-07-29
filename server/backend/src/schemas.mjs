@@ -26,6 +26,10 @@ export const twitchTokenSchema = new mongoose.Schema(
 
 export const twitchEventSchema = new mongoose.Schema(
   {
+    streamUUID: {
+      type: String,
+      required: true,
+    },
     type: {
       type: String,
       enum: EVENT_TYPE_ENUMS,

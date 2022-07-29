@@ -2,14 +2,14 @@
   "name": "mikkisguy-stream-backend",
   "version": "1.0.0",
   "description": "MikkisGuy Stream Backend",
-  "main": "./src/server.mjs",
+  "main": "./src/index.mjs",
   "repository": "https://github.com/mikkisguy/stream-layout",
   "author": "MikkisGuy",
   "license": "MIT",
   "private": false,
   "scripts": {
-    "dev": "nodemon -r dotenv/config src/server.mjs",
-    "start": "node -r dotenv/config src/server.mjs"
+    "dev": "nodemon -r dotenv/config src/index.mjs",
+    "start": "node -r dotenv/config src/index.mjs"
   },
   "dependencies": {
     "@twurple/api": "^5.1.6",
@@ -20,6 +20,7 @@
     "express": "^4.18.1",
     "express-jwt": "^7.7.5",
     "helmet": "^5.1.0",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.4.3"
   },
   "devDependencies": {
