@@ -11,7 +11,10 @@ import {
   CLIENT,
   DIR_NAME,
   LOG_STYLING,
+  JWT,
 } from "./constants.mjs";
+import jwt from "jsonwebtoken";
+const { verify: jwtVerify } = jwt;
 
 // Create model (collection in MongoDB)
 const TwitchToken = mongoose.model("TwitchToken", twitchTokenSchema);
@@ -24,9 +27,8 @@ export const logger = (message, error = false) => {
 };
 
 export const requestErrorHandler = (error, request, response, next) => {
-  const errorLogMessage = `Request ${request.method} ${request.url} from ${
-    request.ip
-  } -> ${IS_PRODUCTION ? error.message : error.stack}`;
+  const errorLogMessage = `Request ${request.method} ${request.url} from ${request.ip
+    } -> ${IS_PRODUCTION ? error.message : error.stack}`;
   const status = error.status || 500;
 
   if (response.headersSent) {
@@ -131,3 +133,10 @@ export const latestEventHandler = async (data, next) => {
 };
 
 export const undefinedAsEmptyString = (input) => (input ? input : "");
+
+export const getStreamUUID = (request) => {
+  const [_, token] = request.header("authorization").split(" ");
+  const decodedJwt = jwtVerify(token, JWT.SECRET);
+
+  return decodedJwt.streamUUID;
+};

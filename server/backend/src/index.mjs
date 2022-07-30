@@ -18,14 +18,14 @@ import {
   getAuthProvider,
   latestEventHandler,
   undefinedAsEmptyString,
+  getStreamUUID,
 } from "./utils.mjs";
 import helmet from "helmet";
 import { expressjwt } from "express-jwt";
 import https from "https";
 import cors from "cors";
 import { ApiClient } from "@twurple/api";
-import jwt from "jsonwebtoken";
-const { verify: jwtVerify } = jwt;
+import { twitchEventSchema } from "./schemas.mjs";
 
 const app = express();
 
@@ -66,8 +66,6 @@ app.get("/latest", async (req, res, next) => {
   try {
     const authProvider = await getAuthProvider();
     const apiClient = new ApiClient({ authProvider });
-    const [_, token] = req.header("authorization").split(" ");
-    const decodedJwt = jwtVerify(token, JWT.SECRET);
 
     // Subscribers
     const { data: subscriberData } =
@@ -78,7 +76,7 @@ app.get("/latest", async (req, res, next) => {
     );
 
     const subResponse = {
-      streamUUID: decodedJwt.streamUUID,
+      streamUUID: getStreamUUID(req),
       type: EVENT_TYPE.SUB,
       displayName: subDisplayName,
       otherData: {
@@ -97,7 +95,7 @@ app.get("/latest", async (req, res, next) => {
     );
 
     const followResponse = {
-      streamUUID: decodedJwt.streamUUID,
+      streamUUID: getStreamUUID(req),
       type: EVENT_TYPE.FOLLOW,
       displayName: followerDisplayName,
       otherData: {
@@ -148,6 +146,20 @@ app.get("/latest-mock", async (_, res, next) => {
         },
       },
     });
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.get("/thanks", async (req, res, next) => {
+  try {
+    const TwitchEvent = mongoose.model("TwitchEvent", twitchEventSchema);
+
+    const queryByUUID = await TwitchEvent.find({ streamUUID: getStreamUUID(req) }, null, {
+      sort: { createdAt: 1 },
+    }).exec();
+
+    return res.send(queryByUUID);
   } catch (error) {
     next(error);
   }
