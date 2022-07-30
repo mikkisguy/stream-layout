@@ -108,16 +108,17 @@ export const getSecret = (filePath) => {
 
 export const latestEventHandler = async (data, next) => {
   try {
+    const { type, displayName } = data;
     const TwitchEvent = mongoose.model("TwitchEvent", twitchEventSchema);
 
     let isNew;
 
-    const queryEvent = await TwitchEvent.find(data, null, {
+    const queryEvent = await TwitchEvent.find({ type, displayName }, null, {
       sort: { createdAt: -1 },
       limit: 1,
     }).exec();
 
-    if (queryEvent.length === 0) {
+    if (queryEvent.length === 0 && displayName !== "") {
       const newEvent = new TwitchEvent(data);
       await newEvent.save();
 
