@@ -24,8 +24,9 @@ export const logger = (message, error = false) => {
 };
 
 export const requestErrorHandler = (error, request, response, next) => {
-  const errorLogMessage = `Request ${request.method} ${request.url} from ${request.ip
-    } -> ${IS_PRODUCTION ? error.message : error.stack}`;
+  const errorLogMessage = `Request ${request.method} ${request.url} from ${
+    request.ip
+  } -> ${IS_PRODUCTION ? error.message : error.stack}`;
   const status = error.status || 500;
 
   if (response.headersSent) {
@@ -109,22 +110,17 @@ export const latestEventHandler = async (data, next) => {
 
     let isNew;
 
-    const queryEvent = await TwitchEvent.find(
-      data,
-      null,
-      {
-        sort: { createdAt: -1 },
-        limit: 1
-      }
-    ).exec();
+    const queryEvent = await TwitchEvent.find(data, null, {
+      sort: { createdAt: -1 },
+      limit: 1,
+    }).exec();
 
     if (queryEvent.length === 0) {
       const newEvent = new TwitchEvent(data);
       await newEvent.save();
 
       isNew = true;
-    }
-    else {
+    } else {
       isNew = false;
     }
 
@@ -132,6 +128,6 @@ export const latestEventHandler = async (data, next) => {
   } catch (error) {
     return next(error);
   }
-}
+};
 
-export const undefinedAsEmptyString = (input) => input ? input : "";
+export const undefinedAsEmptyString = (input) => (input ? input : "");

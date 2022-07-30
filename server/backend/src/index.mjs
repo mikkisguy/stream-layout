@@ -8,7 +8,7 @@ import {
   EVENT_TYPE,
   USER,
   IS_PRODUCTION,
-  DEV_PORT
+  DEV_PORT,
 } from "./constants.mjs";
 import {
   logger,
@@ -17,7 +17,7 @@ import {
   getSecret,
   getAuthProvider,
   latestEventHandler,
-  undefinedAsEmptyString
+  undefinedAsEmptyString,
 } from "./utils.mjs";
 import helmet from "helmet";
 import { expressjwt } from "express-jwt";
@@ -73,7 +73,9 @@ app.get("/latest", async (req, res, next) => {
     const { data: subscriberData } =
       await apiClient.subscriptions.getSubscriptions(USER.ID);
 
-    const subDisplayName = undefinedAsEmptyString(subscriberData[0].userDisplayName);
+    const subDisplayName = undefinedAsEmptyString(
+      subscriberData[0].userDisplayName
+    );
 
     const subResponse = {
       streamUUID: decodedJwt.streamUUID,
@@ -90,14 +92,16 @@ app.get("/latest", async (req, res, next) => {
     const { data: followerData, total: followerCount } =
       await apiClient.users.getFollows({ followedUser: USER.ID });
 
-    const followerDisplayName = undefinedAsEmptyString(followerData[0].userDisplayName);
+    const followerDisplayName = undefinedAsEmptyString(
+      followerData[0].userDisplayName
+    );
 
     const followResponse = {
       streamUUID: decodedJwt.streamUUID,
       type: EVENT_TYPE.FOLLOW,
       displayName: followerDisplayName,
       otherData: {
-        count: followerCount
+        count: followerCount,
       },
     };
 
@@ -112,7 +116,7 @@ app.get("/latest", async (req, res, next) => {
       },
       latestFollow: {
         isNew: isNewFollow,
-        ...followResponse
+        ...followResponse,
       },
     });
   } catch (error) {
@@ -132,16 +136,16 @@ app.get("/latest-mock", async (_, res, next) => {
         otherData: {
           isGift: getRand() === 1,
           gifterDisplayName: "",
-          tier: "1000"
-        }
+          tier: "1000",
+        },
       },
       latestFollow: {
         isNew: getRand() === 1,
         type: "FOLLOW",
         displayName: getRand() === 1 ? "Seuraaja-" : "follower1000",
         otherData: {
-          count: 158
-        }
+          count: 158,
+        },
       },
     });
   } catch (error) {
