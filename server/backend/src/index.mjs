@@ -129,7 +129,7 @@ app.get("/latest-mock", async (_, res, next) => {
     return res.send({
       latestSub: {
         isNew: getRand() === 1,
-        type: "SUB",
+        type: EVENT_TYPE.SUB,
         displayName: getRand() === 1 ? "Subaaja93" : "tilaaja_",
         otherData: {
           isGift: getRand() === 1,
@@ -139,7 +139,7 @@ app.get("/latest-mock", async (_, res, next) => {
       },
       latestFollow: {
         isNew: getRand() === 1,
-        type: "FOLLOW",
+        type: EVENT_TYPE.FOLLOW,
         displayName: getRand() === 1 ? "Seuraaja-" : "follower1000",
         otherData: {
           count: 158,
@@ -160,6 +160,19 @@ app.get("/thanks", async (req, res, next) => {
     }).exec();
 
     return res.send(queryByUUID);
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.get("/thanks-mock", async (req, res, next) => {
+  try {
+    return res.send([
+      { id: 1, streamUUID: getStreamUUID(req), type: EVENT_TYPE.FOLLOW, displayName: "Seuraaja" },
+      { id: 2, streamUUID: getStreamUUID(req), type: EVENT_TYPE.FOLLOW, displayName: "meikäläinen" },
+      { id: 3, streamUUID: getStreamUUID(req), type: EVENT_TYPE.FOLLOW, displayName: "follower1000" },
+      { id: 4, streamUUID: getStreamUUID(req), type: EVENT_TYPE.SUB, displayName: "tilaaja_" },
+    ]);
   } catch (error) {
     next(error);
   }
