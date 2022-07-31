@@ -22,7 +22,7 @@ const HeaderBar = (props) => {
   }, [latestSub, latestFollow]);
 
   return (
-    <HeaderBarContainer fullWidth={props.fullWidth}>
+    <HeaderBarContainer className={props.fullWidth && "full-width"}>
       <Slot className="left-side">
         <Title>Viimeisin tilaaja</Title>
         <BodyText>{latestSub && latestSub.displayName}</BodyText>
@@ -34,7 +34,6 @@ const HeaderBar = (props) => {
       </Slot>
       <CenterSlot>
         <MikkisGuyHead src={mikkisGuyHead} alt="" />
-        <HeadBackground />
       </CenterSlot>
       <Slot>
         <Title>Viimeisin seuraaja</Title>
@@ -64,6 +63,13 @@ const HeaderBarContainer = styled.div`
   padding: 5px 10px;
   border-radius: 10px;
   box-shadow: ${colors.turquoise}40 0px 0px 0px 3px;
+
+  &.full-width {
+    grid-template-columns: repeat(2, 1fr) 250px repeat(2, 1fr);
+    width: 100%;
+    border-radius: initial;
+    margin-top: initial;
+  }
 `;
 
 const Slot = styled.div`
@@ -80,17 +86,17 @@ const Slot = styled.div`
 
 const CenterSlot = styled.div``;
 
-const HeadBackground = styled.div`
-  position: absolute;
-  top: -25%;
-  left: 0;
-  right: 0;
-  margin: auto;
-  height: 100px;
-  width: 100px;
-  background-color: ${colors.blackLight}90;
-  border-radius: 50%;
-`;
+// const HeadBackground = styled.div`
+//   position: absolute;
+//   top: -25%;
+//   left: 0;
+//   right: 0;
+//   margin: auto;
+//   height: 100px;
+//   width: 100px;
+//   background-color: ${colors.blackLight}90;
+//   border-radius: 50%;
+// `;
 
 const MikkisGuyHead = styled.img`
   position: absolute;
