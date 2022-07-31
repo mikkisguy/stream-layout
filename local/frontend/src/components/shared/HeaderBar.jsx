@@ -5,8 +5,9 @@ import useLatest from "../../hooks/useLatest";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import EventToast from "./EventToast";
+import { Title, BodyText } from "./Styled";
 
-const HeaderBar = () => {
+const HeaderBar = (props) => {
   const { latestSub, latestFollow } = useLatest();
 
   useEffect(() => {
@@ -21,26 +22,30 @@ const HeaderBar = () => {
   }, [latestSub, latestFollow]);
 
   return (
-    <HeaderBarContainer>
-      <div>
-        <p>Viimeisin tilaaja</p>
-        <p>{latestSub && latestSub.displayName}</p>
-      </div>
-      <div>
-        <p>Viimeisin hosti</p>
+    <HeaderBarContainer fullWidth={props.fullWidth}>
+      <Slot className="left-side">
+        <Title>Viimeisin tilaaja</Title>
+        <BodyText>{latestSub && latestSub.displayName}</BodyText>
+      </Slot>
+      <Slot className="left-side">
+        <Title>Viimeisin hosti</Title>
+        <BodyText>hostaajahostaajahostaaja1</BodyText>
         {/* Comes from StreamElements for now */}
-      </div>
-      <div>
+      </Slot>
+      <CenterSlot>
         <MikkisGuyHead src={mikkisGuyHead} alt="" />
-      </div>
-      <div>
-        <p>Viimeisin seuraaja</p>
-        <p>{latestFollow && latestFollow.displayName}</p>
-      </div>
-      <div>
-        <p>Seuraajatavoite</p>
-        <p>{latestFollow && latestFollow.otherData.count} / 200</p>
-      </div>
+        <HeadBackground />
+      </CenterSlot>
+      <Slot>
+        <Title>Viimeisin seuraaja</Title>
+        <BodyText>{latestFollow && latestFollow.displayName}</BodyText>
+      </Slot>
+      <Slot>
+        <Title>Seuraajatavoite</Title>
+        <BodyText>
+          {latestFollow && latestFollow.otherData.count} / 200
+        </BodyText>
+      </Slot>
     </HeaderBarContainer>
   );
 };
@@ -49,24 +54,50 @@ export default HeaderBar;
 
 const HeaderBarContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(2, 1fr) 150px repeat(2, 1fr);
+  gap: 10px;
   position: relative;
   align-self: center;
-  height: 50px;
-  width: 1100px;
+  width: 1300px;
   margin-top: 30px;
   background-color: ${colors.gray};
+  padding: 5px 10px;
+  border-radius: 10px;
+  box-shadow: ${colors.turquoise}40 0px 0px 0px 3px;
+`;
+
+const Slot = styled.div`
+  padding: 5px 15px;
+  border-left: 1px solid ${colors.turquoiseDark};
+
+  &.left-side {
+    text-align: right;
+
+    border-right: 1px solid ${colors.turquoiseDark};
+    border-left: none;
+  }
+`;
+
+const CenterSlot = styled.div``;
+
+const HeadBackground = styled.div`
+  position: absolute;
+  top: -25%;
+  left: 0;
+  right: 0;
+  margin: auto;
+  height: 100px;
+  width: 100px;
+  background-color: ${colors.blackLight}90;
+  border-radius: 50%;
 `;
 
 const MikkisGuyHead = styled.img`
   position: absolute;
-  top: -25%;
-  left: 47%;
-  height: 78px;
-`;
-
-const EventNotification = styled.div`
-  display: ${({ show }) => (show ? "block" : "none")};
-  background-color: ${colors.gray};
-  color: ${colors.peach};
+  top: -20%;
+  left: 0;
+  right: 0;
+  margin: auto;
+  height: 90px;
+  z-index: 1;
 `;

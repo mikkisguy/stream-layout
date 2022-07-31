@@ -1,10 +1,12 @@
+import { Title, BodyText } from "./Styled";
+
 const InfoToast = ({ info }) => {
   const { title, content } = info;
 
   return (
     <>
-      <p>{title}</p>
-      <p>{content}</p>
+      <Title>{title}</Title>
+      <BodyText>{content}</BodyText>
     </>
   );
 };

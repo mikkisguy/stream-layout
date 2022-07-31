@@ -1,10 +1,12 @@
+import { BodyText, Title } from "./Styled";
+
 const EventToast = ({ latest }) => {
   const { type, displayName, otherData } = latest;
 
   return (
     <>
-      <p>Uusi {type}</p>
-      <p>{displayName}</p>
+      <Title>Uusi {type}</Title>
+      <BodyText>{displayName}</BodyText>
     </>
   );
 };
