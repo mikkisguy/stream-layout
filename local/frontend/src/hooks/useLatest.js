@@ -23,7 +23,6 @@ const useLatest = () => {
   );
 
   if (isError) {
-    console.log("Error.status:", error.response.status);
     throw new Error(error);
   }
 

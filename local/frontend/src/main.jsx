@@ -3,12 +3,13 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Main from "./components/scenes/Main";
-import Secondary from "./components/scenes/Secondary";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ToastContainer, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import { IS_DEVELOPMENT } from "./constants";
+import Intro from "./components/scenes/Intro";
+import Outro from "./components/scenes/Outro";
 
 const queryClient = new QueryClient();
 
@@ -25,8 +26,8 @@ const Routing = () => {
             path="break-fullwidth"
             element={<Main fullWidthBar onBreak />}
           />
-          <Route path="intro" element={<Secondary />} />
-          <Route path="outro" element={<Secondary asOutro />} />
+          <Route path="intro" element={<Intro />} />
+          <Route path="outro" element={<Outro />} />
         </Route>
       </Routes>
     </BrowserRouter>
