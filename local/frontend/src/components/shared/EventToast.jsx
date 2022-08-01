@@ -13,7 +13,10 @@ const EventToast = ({ latest }) => {
   return (
     <>
       <Title>Uusi {getTitle()} </Title>
-      <BodyText>{displayName}</BodyText>
+      <BodyText>
+        {displayName}{" "}
+        {otherData.tier && `(Taso ${otherData.tier.split("")[0]})`}
+      </BodyText>
 
       {otherData.isGift && (
         <BodyText asSecondary>
