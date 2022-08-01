@@ -31,11 +31,7 @@ const App = () => {
 
         const currentInfo = infoJson[infoKeys[nextIndex()]];
 
-        toast(<InfoToast info={currentInfo} />, {
-          progressStyle: {
-            background: currentInfo.color,
-          },
-        });
+        toast(<InfoToast info={currentInfo} />, { className: "info-toast" });
       }
     }, milliseconds);
 

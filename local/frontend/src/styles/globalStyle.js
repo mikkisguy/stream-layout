@@ -15,6 +15,25 @@ const GlobalStyle = createGlobalStyle`
     background-color: #000;
     color: ${colors.peach};
   }
+
+  :root {
+    --toastify-color-dark: ${colors.gray};
+    --toastify-color-progress-dark: ${colors.turquoiseLight};
+  }
+
+  .Toastify__toast { 
+    box-shadow: ${colors.turquoise}40 0px 0px 0px 3px;
+    padding: 10px;
+
+    &.info-toast {
+      --toastify-color-dark: ${colors.blackLight};
+      box-shadow: ${colors.blackLight}40 0px 0px 0px 3px;
+    }
+  }
+  
+  .Toastify__progress-bar {
+    filter: opacity(10%);
+  }
 `;
 
 export default GlobalStyle;

@@ -1,32 +1,32 @@
 {
   "twitter": {
     "slug": "twitter",
-    "title": "Seuraa Twitterissä!",
-    "content": "Striimi-ilmoitukset yms",
-    "color": "#1d9bf0"
+    "title": "Seuraa Twitterissä",
+    "content": "Striimi-ilmoitukset ja muutokset @mikkisguy",
+    "color": "#1da1f2"
   },
   "youtubeMain": {
     "slug": "youtube",
     "title": "MikkisGuy YouTubessa",
-    "content": "Minecraftia ja elämää",
+    "content": "Minecraftia ja elämää, linkki: !youtube",
     "color": "#ff0000"
   },
   "discord": {
     "slug": "discord",
-    "title": "Liity Discordiin!",
-    "content": "Yhteisön hengailuun",
-    "color": "#5460e6"
+    "title": "Tuu hengaamaan!",
+    "content": "Saat linkin Discordiin kirjoittamalla !discord",
+    "color": "#5865f2"
   },
   "schedule": {
-    "slug": "schedule",
+    "slug": "twitch",
     "title": "Striimien aikataulu",
-    "content": "Koodia ma, Minecraftia ke ja pe",
-    "color": "#a970ff"
+    "content": "Koodia MA, Minecraftia KE ja PE noin klo 18 alkaen, muutokset mahdollisia",
+    "color": "#9146ff"
   },
   "youtubeArchive": {
     "slug": "youtube",
     "title": "MikkisGuy Arkisto",
-    "content": "Striimitallenteet YouTubessa",
+    "content": "Striimitallenteet erillisellä kanavalla, linkki: !arkisto",
     "color": "#ff0000"
   }
 }

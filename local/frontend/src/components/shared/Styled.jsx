@@ -10,6 +10,7 @@ export const Title = styled.p`
 
 export const BodyText = styled.p`
   font-family: ${fonts.body};
-  color: ${colors.peach};
+  color: ${({ asSecondary }) =>
+    asSecondary ? colors.grayLight : colors.peach};
   letter-spacing: 1px;
 `;

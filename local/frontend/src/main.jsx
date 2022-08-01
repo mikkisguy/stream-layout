@@ -52,11 +52,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         theme="dark"
         limit={3}
         transition={Slide}
-        progressStyle={{
-          background: "#ffffff",
-        }}
       />
-      {IS_DEVELOPMENT && <ReactQueryDevtools />}
+      {/* {IS_DEVELOPMENT && <ReactQueryDevtools />} */}
     </QueryClientProvider>
   </React.StrictMode>
 );

@@ -12,7 +12,7 @@ const useLatest = () => {
   const { data, error, isError, isSuccess } = useQuery(
     ["stream-api-latest"],
     () =>
-      axios(`${STREAM_API_URL}/latest-mock`, {
+      axios(`${STREAM_API_URL}/latest-mock/true`, {
         headers: { Authorization: `Bearer ${tokenData.data.token}` },
       }),
     {
