@@ -39,7 +39,12 @@ const httpsServer = https.createServer(
 
 app.use(helmet());
 
-app.use(cors({ origin: ["http://localhost:3000", "http://localhost:7000"] }));
+app.use(cors({
+  origin: [
+    "http://localhost:3000",
+    "http://localhost:7000"
+  ]
+}));
 
 app.use(
   expressjwt({ secret: JWT.SECRET, algorithms: [JWT.ALGORITHM] })
@@ -122,8 +127,8 @@ app.get("/latest", async (req, res, next) => {
   }
 });
 
-app.get("/latest-mock", async (_, res, next) => {
-  const getRand = () => Math.floor(Math.random() * 6);
+app.get("/latest-mock/:boolean", async (req, res, next) => {
+  const getRand = () => Math.floor(Math.random() * 3);
 
   try {
     return res.send({
@@ -132,7 +137,7 @@ app.get("/latest-mock", async (_, res, next) => {
         type: EVENT_TYPE.SUB,
         displayName: getRand() === 1 ? "Subaaja93" : "tilaaja_",
         otherData: {
-          isGift: getRand() === 1,
+          isGift: req.params.boolean || false,
           gifterDisplayName: "",
           tier: "1000",
         },
