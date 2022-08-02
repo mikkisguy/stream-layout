@@ -15,7 +15,7 @@ const EventToast = ({ latest }) => {
   return (
     <>
       <Title>Uusi {getTitle()} </Title>
-      <BodyText>{displayName}</BodyText>
+      <BodyText className="top-padded">{displayName}</BodyText>
 
       {otherData.isGift && (
         <BodyText className="secondary top-padded">
