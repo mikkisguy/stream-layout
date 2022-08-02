@@ -14,6 +14,7 @@ const GlobalStyle = createGlobalStyle`
     background-repeat: no-repeat;
     background-color: #000;
     color: ${colors.peach};
+    font-size: 62.5%;
   }
 
   :root {
@@ -24,6 +25,7 @@ const GlobalStyle = createGlobalStyle`
   .Toastify__toast { 
     box-shadow: ${colors.turquoise}40 0px 0px 0px 3px;
     padding: 10px;
+    width: 350px;
 
     &.info-toast {
       --toastify-color-dark: ${colors.blackLight};

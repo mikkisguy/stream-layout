@@ -22,7 +22,7 @@ const InfoToast = ({ info }) => {
       <InfoIcon src={getIcon()} />
       <div>
         <Title>{title}</Title>
-        <BodyText asSecondary>{content}</BodyText>
+        <BodyText className="secondary">{content}</BodyText>
       </div>
     </InfoContent>
   );

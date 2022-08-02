@@ -54,13 +54,13 @@ export default HeaderBar;
 const HeaderBarContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr) 150px repeat(2, 1fr);
-  gap: 10px;
+  gap: 5px;
   position: relative;
   align-self: center;
   width: 1300px;
   margin-top: 30px;
   background-color: ${colors.gray};
-  padding: 5px 10px;
+  padding: 2px 10px;
   border-radius: 10px;
   box-shadow: ${colors.turquoise}40 0px 0px 0px 3px;
 

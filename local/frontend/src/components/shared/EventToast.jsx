@@ -4,7 +4,9 @@ const EventToast = ({ latest }) => {
   const { type, displayName, otherData } = latest;
 
   const getTitle = () => {
-    if (type === "SUB") return "tilaaja 💜";
+    if (type === "SUB") {
+      return `tason ${otherData.tier.split("")[0]} tilaaja 💜`;
+    }
     if (type == "FOLLOW") return "seuraaja 👋";
 
     return "";
@@ -13,13 +15,10 @@ const EventToast = ({ latest }) => {
   return (
     <>
       <Title>Uusi {getTitle()} </Title>
-      <BodyText>
-        {displayName}{" "}
-        {otherData.tier && `(Taso ${otherData.tier.split("")[0]})`}
-      </BodyText>
+      <BodyText>{displayName}</BodyText>
 
       {otherData.isGift && (
-        <BodyText asSecondary>
+        <BodyText className="secondary top-padded">
           Lahja käyttäjältä {otherData.gifterDisplayName}
         </BodyText>
       )}
