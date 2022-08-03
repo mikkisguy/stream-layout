@@ -28,6 +28,8 @@ const Routing = () => {
           />
           <Route path="intro" element={<Intro />} />
           <Route path="outro" element={<Outro />} />
+          <Route path="intro-coding" element={<Intro asCoding />} />
+          <Route path="outro-coding" element={<Outro asCoding />} />
         </Route>
       </Routes>
     </BrowserRouter>
