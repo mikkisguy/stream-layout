@@ -41,7 +41,7 @@ const Outro = ({ asCoding }) => {
         <Box>
           <Title className="big">Kiitos katsomisesta!</Title>
 
-          {subs.length > 0 && (
+          {subs?.length > 0 && (
             <Section>
               <Title>Uudet tilaajat</Title>
               <BodyText>
@@ -52,7 +52,7 @@ const Outro = ({ asCoding }) => {
             </Section>
           )}
 
-          {followers.length > 0 && (
+          {followers?.length > 0 && (
             <Section>
               <Title>Uudet seuraajat</Title>
               <BodyText>
