@@ -33,8 +33,13 @@ export const SceneContainer = styled.div`
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 20px;
-  margin: 230px auto;
+  margin: auto;
+  margin-top: 230px;
   width: 1300px;
+
+  &.with-headerbar {
+    margin-top: 160px;
+  }
 `;
 
 export const Box = styled.div`

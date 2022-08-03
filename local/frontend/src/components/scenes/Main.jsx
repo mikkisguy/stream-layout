@@ -1,4 +1,6 @@
 import HeaderBar from "../shared/HeaderBar";
+import { Box, SceneContainer } from "../shared/Styled";
+import styled from "styled-components";
 
 const Main = ({
   fullWidthBar = false,
@@ -15,6 +17,13 @@ const Main = ({
   return (
     <>
       <HeaderBar fullWidth={fullWidthBar} />
+
+      {justChatting && (
+        <SceneContainer className="with-headerbar">
+          <div>{/* Empty */}</div>
+          <Box>{/* StreamElement chat goes here */}</Box>
+        </SceneContainer>
+      )}
     </>
   );
 };
