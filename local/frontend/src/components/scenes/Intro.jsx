@@ -2,7 +2,6 @@ import Countdown, { zeroPad } from "react-countdown";
 import styled, { css } from "styled-components";
 import { MINUTE } from "../../constants";
 import { colors, resolution, fonts } from "../../styles/variables";
-import HeaderBar from "../shared/HeaderBar";
 import minecraftOne from "../../assets/images/screenshots/minecraft1.jpg";
 import minecraftTwo from "../../assets/images/screenshots/minecraft2.jpg";
 import minecraftThree from "../../assets/images/screenshots/minecraft3.jpg";
