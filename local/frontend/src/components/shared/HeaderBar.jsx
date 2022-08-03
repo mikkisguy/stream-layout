@@ -63,6 +63,7 @@ const HeaderBarContainer = styled.div`
   padding: 2px 10px;
   border-radius: 10px;
   box-shadow: ${colors.turquoise}40 0px 0px 0px 3px;
+  z-index: 1;
 
   &.full-width {
     grid-template-columns: repeat(2, 1fr) 250px repeat(2, 1fr);
@@ -105,5 +106,5 @@ const MikkisGuyHead = styled.img`
   right: 0;
   margin: auto;
   height: 90px;
-  z-index: 1;
+  z-index: 2;
 `;

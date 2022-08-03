@@ -1,5 +1,5 @@
 import { createGlobalStyle } from "styled-components";
-import minecraftScreenshot from "../assets/images/minecraft-screenshot.png";
+import minecraftScreenshot from "../assets/images/screenshots/minecraft1.jpg";
 import cssReset from "./cssReset";
 import { colors, resolution } from "./variables";
 import { IS_DEVELOPMENT } from "../constants";

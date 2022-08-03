@@ -71,10 +71,6 @@ const StreamLayout = styled.div`
 `;
 
 const RouterLinks = styled.div`
-  position: absolute;
-  top: 200px;
-  padding: 15px;
-
   a {
     color: #fff;
     display: inline-block;
