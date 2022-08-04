@@ -32,9 +32,9 @@ const HeaderBar = (props) => {
         <BodyText>hostaajahostaajahostaaja1</BodyText>
         {/* Comes from StreamElements for now */}
       </Slot>
-      <CenterSlot>
+      <div>
         <MikkisGuyHead src={mikkisGuyHead} alt="" />
-      </CenterSlot>
+      </div>
       <Slot>
         <Title>Viimeisin seuraaja</Title>
         <BodyText>{latestFollow && latestFollow.displayName}</BodyText>
@@ -85,7 +85,15 @@ const Slot = styled.div`
   }
 `;
 
-const CenterSlot = styled.div``;
+const MikkisGuyHead = styled.img`
+  position: absolute;
+  top: -12.5%;
+  left: 0;
+  right: 0;
+  margin: auto;
+  height: 90px;
+  z-index: 2;
+`;
 
 // const HeadBackground = styled.div`
 //   position: absolute;
@@ -98,13 +106,3 @@ const CenterSlot = styled.div``;
 //   background-color: ${colors.blackLight}90;
 //   border-radius: 50%;
 // `;
-
-const MikkisGuyHead = styled.img`
-  position: absolute;
-  top: -20%;
-  left: 0;
-  right: 0;
-  margin: auto;
-  height: 90px;
-  z-index: 2;
-`;

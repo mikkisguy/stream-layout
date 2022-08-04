@@ -1,6 +1,6 @@
 import GlobalStyle from "./styles/globalStyle";
 import styled from "styled-components";
-import { colors, resolution, fonts } from "./styles/variables";
+import { colors, resolution } from "./styles/variables";
 import { Link, Outlet } from "react-router-dom";
 import { IS_DEVELOPMENT, MINUTE, SECOND } from "./constants";
 import infoJson from "./data/info.json";
@@ -9,10 +9,11 @@ import { toast } from "react-toastify";
 import InfoToast from "./components/shared/InfoToast";
 
 const App = () => {
+  const visibleFor = SECOND * 8;
   const infoKeys = Object.keys(infoJson);
   const [infoIndex, setInfoIndex] = useState(-1);
   const [toggleInfo, setToggleInfo] = useState(true);
-  const milliseconds = toggleInfo ? SECOND * 5 : SECOND * 8;
+  const milliseconds = toggleInfo ? MINUTE * 8 : visibleFor;
 
   useEffect(() => {
     const infoTimer = setTimeout(() => {
@@ -31,7 +32,10 @@ const App = () => {
 
         const currentInfo = infoJson[infoKeys[nextIndex()]];
 
-        toast(<InfoToast info={currentInfo} />, { className: "info-toast" });
+        toast(<InfoToast info={currentInfo} />, {
+          autoClose: visibleFor,
+          className: "info-toast",
+        });
       }
     }, milliseconds);
 
