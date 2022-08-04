@@ -12,12 +12,12 @@ const useLatest = () => {
   const { data, error, isError, isSuccess } = useQuery(
     ["stream-api-latest"],
     () =>
-      axios(`${STREAM_API_URL}/latest-mock/true`, {
+      axios(`${STREAM_API_URL}/latest`, {
         headers: { Authorization: `Bearer ${tokenData.data.token}` },
       }),
     {
       enabled: tokenIsSuccess,
-      refetchInterval: SECOND * 5,
+      refetchInterval: SECOND * 2,
       refetchIntervalInBackground: true,
     }
   );

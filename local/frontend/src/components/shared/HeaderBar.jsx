@@ -47,8 +47,7 @@ const HeaderBar = (props) => {
       </Slot>
       <Slot className="left-side">
         <Title>Viimeisin hosti</Title>
-        <BodyText>hostaajahostaajahostaaja1</BodyText>
-        {/* Comes from StreamElements for now */}
+        <BodyText>{/* Comes from StreamElements for now */}</BodyText>
       </Slot>
       <div>
         <MikkisGuyHead src={mikkisGuyHead} alt="" />

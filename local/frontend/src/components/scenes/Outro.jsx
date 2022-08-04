@@ -16,7 +16,7 @@ const Outro = ({ asCoding }) => {
   const { data, error, isError, isSuccess } = useQuery(
     ["stream-api-thanks"],
     () =>
-      axios(`${STREAM_API_URL}/thanks-mock`, {
+      axios(`${STREAM_API_URL}/thanks`, {
         headers: { Authorization: `Bearer ${tokenData.data.token}` },
       }),
     {
@@ -56,7 +56,7 @@ const Outro = ({ asCoding }) => {
             <Section>
               <Title>Uudet seuraajat</Title>
               <BodyText>
-                {followers?.map(({ id, displayName }) => {
+                {followers.map(({ id, displayName }) => {
                   return <Nickname key={id}>{displayName}</Nickname>;
                 })}
               </BodyText>
