@@ -1,6 +1,6 @@
 import GlobalStyle from "./styles/globalStyle";
 import styled from "styled-components";
-import { resolution } from "./styles/variables";
+import { colors, resolution, fonts } from "./styles/variables";
 import { Link, Outlet } from "react-router-dom";
 import { IS_DEVELOPMENT, MINUTE, SECOND } from "./constants";
 import infoJson from "./data/info.json";
@@ -71,14 +71,20 @@ const StreamLayout = styled.div`
 `;
 
 const RouterLinks = styled.div`
+  position: absolute;
+  bottom: 10px;
+  right: 50px;
+
   a {
-    color: #fff;
+    background-color: ${colors.black}90;
+    font-family: sans-serif;
+    color: ${colors.grayLight};
     display: inline-block;
-    padding: 5px 10px;
-    border: 1px solid #fff;
+    padding: 2px 5px;
+    border: 1px solid ${colors.gray};
     margin-right: 15px;
     text-decoration: none;
-    font-size: 20px;
+    font-size: 1.2rem;
 
     :hover {
       text-decoration: underline;
