@@ -1,6 +1,7 @@
 import HeaderBar from "../shared/HeaderBar";
-import { Box, SceneContainer } from "../shared/Styled";
+import { Box, SceneContainer, Title } from "../shared/Styled";
 import styled from "styled-components";
+import MusicCredit from "../shared/MusicCredit";
 
 const Main = ({
   fullWidthBar = false,
@@ -18,14 +19,32 @@ const Main = ({
     <>
       <HeaderBar fullWidth={fullWidthBar} />
 
-      {justChatting && (
-        <SceneContainer className="with-headerbar">
-          <div>{/* Empty */}</div>
-          <Box>{/* StreamElement chat goes here */}</Box>
-        </SceneContainer>
+      {(justChatting || onBreak) && (
+        <>
+          <SceneContainer
+            className={
+              fullWidthBar ? "with-fullwidth-headerbar" : "with-headerbar"
+            }
+          >
+            <BreakBox hidden={justChatting}>
+              <BreakTitle className="big">Tauko, palaan pian!</BreakTitle>
+            </BreakBox>
+            <Box>{/* StreamElement chat goes here */}</Box>
+          </SceneContainer>
+
+          {onBreak && <MusicCredit />}
+        </>
       )}
     </>
   );
 };
 
 export default Main;
+
+const BreakBox = styled(Box)`
+  visibility: ${({ hidden }) => (hidden ? "hidden" : "visible")};
+`;
+
+const BreakTitle = styled(Title)`
+  margin-bottom: 30px;
+`;

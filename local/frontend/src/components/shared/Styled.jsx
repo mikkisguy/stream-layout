@@ -40,6 +40,10 @@ export const SceneContainer = styled.div`
   &.with-headerbar {
     margin-top: 160px;
   }
+
+  &.with-fullwidth-headerbar {
+    margin-top: 190px;
+  }
 `;
 
 export const Box = styled.div`
@@ -47,7 +51,7 @@ export const Box = styled.div`
   flex-direction: column;
   justify-content: center;
   text-align: center;
-  background-color: ${colors.gray}30;
+  background-color: ${colors.gray}45;
   box-shadow: ${colors.turquoise}40 0px 0px 0px 3px;
   border-radius: 10px;
   padding: 0 40px;
