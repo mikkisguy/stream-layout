@@ -6,17 +6,35 @@ import { useEffect } from "react";
 import { toast } from "react-toastify";
 import EventToast from "./EventToast";
 import { Title, BodyText } from "./Styled";
+import useSound from "use-sound";
+import FollowNotification from "../../assets/sounds/follow.mp3";
+import SubNotification from "../../assets/sounds/sub.mp3";
+import { SECOND } from "../../constants";
 
 const HeaderBar = (props) => {
   const { latestSub, latestFollow } = useLatest();
+  const [playFollow] = useSound(FollowNotification, {
+    volume: 0.6,
+    interrupt: false,
+  });
+  const [playSub] = useSound(SubNotification, {
+    volume: 0.5,
+    interrupt: false,
+  });
 
   useEffect(() => {
     if (latestSub !== undefined || latestFollow !== undefined) {
       if (latestSub.isNew) {
-        toast(<EventToast latest={latestSub} />);
+        toast(<EventToast latest={latestSub} />, {
+          autoClose: SECOND * 16,
+          onOpen: () => playSub(),
+        });
       }
       if (latestFollow.isNew) {
-        toast(<EventToast latest={latestFollow} />);
+        toast(<EventToast latest={latestFollow} />, {
+          autoClose: SECOND * 8,
+          onOpen: () => playFollow(),
+        });
       }
     }
   }, [latestSub, latestFollow]);
