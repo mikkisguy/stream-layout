@@ -18,7 +18,8 @@
     "react-dom": "^18.0.0",
     "react-router-dom": "6",
     "react-toastify": "^9.0.7",
-    "styled-components": "^5.3.5"
+    "styled-components": "^5.3.5",
+    "use-sound": "^4.0.1"
   },
   "devDependencies": {
     "@tanstack/react-query-devtools": "^4.0.5",

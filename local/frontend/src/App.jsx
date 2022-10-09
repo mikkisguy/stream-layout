@@ -1,6 +1,6 @@
 import GlobalStyle from "./styles/globalStyle";
 import styled from "styled-components";
-import { resolution } from "./styles/variables";
+import { colors, resolution } from "./styles/variables";
 import { Link, Outlet } from "react-router-dom";
 import { IS_DEVELOPMENT, MINUTE, SECOND } from "./constants";
 import infoJson from "./data/info.json";
@@ -9,10 +9,11 @@ import { toast } from "react-toastify";
 import InfoToast from "./components/shared/InfoToast";
 
 const App = () => {
+  const visibleFor = SECOND * 8;
   const infoKeys = Object.keys(infoJson);
   const [infoIndex, setInfoIndex] = useState(-1);
   const [toggleInfo, setToggleInfo] = useState(true);
-  const milliseconds = toggleInfo ? SECOND * 5 : SECOND * 8;
+  const milliseconds = toggleInfo ? MINUTE * 8 : visibleFor;
 
   useEffect(() => {
     const infoTimer = setTimeout(() => {
@@ -31,7 +32,10 @@ const App = () => {
 
         const currentInfo = infoJson[infoKeys[nextIndex()]];
 
-        toast(<InfoToast info={currentInfo} />, { className: "info-toast" });
+        toast(<InfoToast info={currentInfo} />, {
+          autoClose: visibleFor,
+          className: "info-toast",
+        });
       }
     }, milliseconds);
 
@@ -72,17 +76,19 @@ const StreamLayout = styled.div`
 
 const RouterLinks = styled.div`
   position: absolute;
-  top: 200px;
-  padding: 15px;
+  bottom: 10px;
+  right: 50px;
 
   a {
-    color: #fff;
+    background-color: ${colors.black}90;
+    font-family: sans-serif;
+    color: ${colors.grayLight};
     display: inline-block;
-    padding: 5px 10px;
-    border: 1px solid #fff;
+    padding: 2px 5px;
+    border: 1px solid ${colors.gray};
     margin-right: 15px;
     text-decoration: none;
-    font-size: 20px;
+    font-size: 1.2rem;
 
     :hover {
       text-decoration: underline;

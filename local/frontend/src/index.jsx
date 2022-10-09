@@ -28,6 +28,8 @@ const Routing = () => {
           />
           <Route path="intro" element={<Intro />} />
           <Route path="outro" element={<Outro />} />
+          <Route path="intro-coding" element={<Intro asCoding />} />
+          <Route path="outro-coding" element={<Outro asCoding />} />
         </Route>
       </Routes>
     </BrowserRouter>
@@ -41,7 +43,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <ToastContainer
         closeButton={false}
         position="bottom-left"
-        autoClose={8000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
@@ -53,7 +54,14 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         limit={3}
         transition={Slide}
       />
-      {/* {IS_DEVELOPMENT && <ReactQueryDevtools />} */}
+      {IS_DEVELOPMENT && (
+        <ReactQueryDevtools
+          position="bottom-right"
+          closeButtonProps={{
+            style: { fontFamily: "sans-serif", fontSize: "1rem" },
+          }}
+        />
+      )}
     </QueryClientProvider>
   </React.StrictMode>
 );

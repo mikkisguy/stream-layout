@@ -1,5 +1,5 @@
 import { createGlobalStyle } from "styled-components";
-import minecraftScreenshot from "../assets/images/minecraft-screenshot.png";
+import minecraftScreenshot from "../assets/images/screenshots/minecraft1.jpg";
 import cssReset from "./cssReset";
 import { colors, resolution } from "./variables";
 import { IS_DEVELOPMENT } from "../constants";
@@ -14,6 +14,7 @@ const GlobalStyle = createGlobalStyle`
     background-repeat: no-repeat;
     background-color: #000;
     color: ${colors.peach};
+    font-size: 62.5%;
   }
 
   :root {
@@ -22,12 +23,12 @@ const GlobalStyle = createGlobalStyle`
   }
 
   .Toastify__toast { 
-    box-shadow: ${colors.turquoise}40 0px 0px 0px 3px;
+    box-shadow: ${colors.gray}40 0px 0px 0px 3px;
     padding: 10px;
+    width: 350px;
 
     &.info-toast {
       --toastify-color-dark: ${colors.blackLight};
-      box-shadow: ${colors.blackLight}40 0px 0px 0px 3px;
     }
   }
   

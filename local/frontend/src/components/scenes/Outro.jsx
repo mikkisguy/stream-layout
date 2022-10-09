@@ -1,10 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
 import { EVENT_TYPE, STREAM_API_URL } from "../../constants";
 import useToken from "../../hooks/useToken";
 import axios from "axios";
+import SceneBackground from "../shared/SceneBackground";
+import { BodyText, Box, SceneContainer, Title } from "../shared/Styled";
+import MusicCredit from "../shared/MusicCredit";
+import { colors } from "../../styles/variables";
+import styled from "styled-components";
 
-const Outro = () => {
+const Outro = ({ asCoding }) => {
   let subs;
   let followers;
 
@@ -12,7 +16,7 @@ const Outro = () => {
   const { data, error, isError, isSuccess } = useQuery(
     ["stream-api-thanks"],
     () =>
-      axios(`${STREAM_API_URL}/thanks-mock`, {
+      axios(`${STREAM_API_URL}/thanks`, {
         headers: { Authorization: `Bearer ${tokenData.data.token}` },
       }),
     {
@@ -31,15 +35,50 @@ const Outro = () => {
   }
 
   return (
-    <div>
-      {subs?.map(({ id, displayName }) => {
-        return <p key={id}>{displayName}</p>;
-      })}
-      {followers?.map(({ id, displayName }) => {
-        return <p key={id}>{displayName}</p>;
-      })}
-    </div>
+    <SceneBackground asCoding={asCoding}>
+      <MusicCredit />
+      <SceneContainer>
+        <Box>
+          <Title className="big">Kiitos katsomisesta!</Title>
+
+          {subs?.length > 0 && (
+            <Section>
+              <Title>Uudet tilaajat</Title>
+              <BodyText>
+                {subs.map(({ id, displayName }) => {
+                  return <Nickname key={id}>{displayName}</Nickname>;
+                })}
+              </BodyText>
+            </Section>
+          )}
+
+          {followers?.length > 0 && (
+            <Section>
+              <Title>Uudet seuraajat</Title>
+              <BodyText>
+                {followers.map(({ id, displayName }) => {
+                  return <Nickname key={id}>{displayName}</Nickname>;
+                })}
+              </BodyText>
+            </Section>
+          )}
+        </Box>
+        <Box>{/* StreamElement chat goes here */}</Box>
+      </SceneContainer>
+    </SceneBackground>
   );
 };
 
 export default Outro;
+
+const Nickname = styled.span`
+  display: inline-block;
+  background-color: ${colors.gray}90;
+  padding: 3px 5px;
+  margin-right: 10px;
+  border-radius: 5px;
+`;
+
+const Section = styled.div`
+  margin-top: 20px;
+`;
