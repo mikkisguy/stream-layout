@@ -2,14 +2,11 @@ import { format } from "date-fns";
 import { mongoose } from "mongoose";
 import { twitchTokenSchema, twitchEventSchema } from "./schemas.mjs";
 import { RefreshingAuthProvider } from "@twurple/auth";
-import * as fs from "fs";
-import * as path from "path";
 import {
   IS_PRODUCTION,
   DB_CONNECTION_STRING,
   INITIAL,
   CLIENT,
-  DIR_NAME,
   LOG_STYLING,
   JWT,
 } from "./constants.mjs";
@@ -98,12 +95,6 @@ export const getAuthProvider = async () => {
     },
     JSON.parse(tokenData)
   );
-};
-
-export const getSecret = (filePath) => {
-  const fullPath = path.join(DIR_NAME, filePath);
-
-  return fs.readFileSync(fullPath);
 };
 
 export const latestEventHandler = async (data, next) => {

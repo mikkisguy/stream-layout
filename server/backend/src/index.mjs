@@ -14,7 +14,6 @@ import {
   logger,
   requestErrorHandler,
   initDatabase,
-  getSecret,
   getAuthProvider,
   latestEventHandler,
   undefinedAsEmptyString,
@@ -26,13 +25,14 @@ import https from "https";
 import cors from "cors";
 import { ApiClient } from "@twurple/api";
 import { twitchEventSchema } from "./schemas.mjs";
+import * as fs from "fs";
 
 const app = express();
 
 const httpsServer = https.createServer(
   {
-    cert: getSecret(SSL.CERT_PATH),
-    key: getSecret(SSL.KEY_PATH),
+    cert: fs.readFileSync(SSL.CERT_PATH),
+    key: fs.readFileSync(SSL.KEY_PATH),
   },
   app
 );
