@@ -5,11 +5,11 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Main from "./components/scenes/Main";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { ToastContainer, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import { IS_DEVELOPMENT } from "./constants";
 import Intro from "./components/scenes/Intro";
 import Outro from "./components/scenes/Outro";
+import Toasts from "./components/shared/Toasts";
 
 const queryClient = new QueryClient();
 
@@ -19,6 +19,7 @@ const Routing = () => {
       <Routes>
         <Route path="/" element={<App />}>
           <Route index element={<Main />} />
+          <Route path="toasts" element={<Toasts />} />
           <Route path="fullwidth" element={<Main fullWidthBar />} />
           <Route path="chatting" element={<Main justChatting />} />
           <Route path="break" element={<Main onBreak />} />
@@ -40,20 +41,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <Routing />
-      <ToastContainer
-        closeButton={false}
-        position="bottom-left"
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss={false}
-        draggable={false}
-        pauseOnHover={false}
-        theme="dark"
-        limit={3}
-        transition={Slide}
-      />
       {IS_DEVELOPMENT && (
         <ReactQueryDevtools
           position="bottom-right"

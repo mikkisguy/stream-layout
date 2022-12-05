@@ -19,8 +19,8 @@
   },
   "schedule": {
     "slug": "twitch",
-    "title": "Striimien aikataulu",
-    "content": "Koodia ma, Minecraftia ke ja pe noin klo 18 alkaen, muutokset mahdollisia",
+    "title": "Twitch striimit",
+    "content": "Tällä hetkellä ei ole aikataulua, pistä seuraten niin saat ilmoituksen",
     "color": "#9146ff"
   },
   "youtubeArchive": {

@@ -58,6 +58,7 @@ const App = () => {
           <Link to="break-fullwidth">Break full width</Link>
           <Link to="intro">Intro</Link>
           <Link to="outro">Outro</Link>
+          <Link to="toasts">Toasts</Link>
         </RouterLinks>
       )}
     </>
