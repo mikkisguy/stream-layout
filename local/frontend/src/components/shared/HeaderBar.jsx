@@ -14,7 +14,7 @@ const HeaderBar = (props) => {
         <BodyText>{latestSub && latestSub.displayName}</BodyText>
       </Slot>
       <Slot className="left-side">
-        <Title>Viimeisin hosti</Title>
+        <Title>Viimeisin raidi</Title>
         <BodyText>{/* Comes from StreamElements for now */}</BodyText>
       </Slot>
       <div>
