@@ -6,9 +6,9 @@ import MusicCredit from "../shared/MusicCredit";
 import SceneBackground from "../shared/SceneBackground";
 import { Box, SceneContainer, Title } from "../shared/Styled";
 
-const Intro = ({ asCoding }) => {
+const Intro = () => {
   return (
-    <SceneBackground asCoding={asCoding}>
+    <SceneBackground>
       <MusicCredit />
       <SceneContainer>
         <Box>

@@ -1,14 +1,20 @@
 import styled from "styled-components";
 import mikkisGuyHead from "../../assets/images/mikkisguy-head.png";
+import mikkisGuyHeadAfterDark from "../../assets/images/mikkisguy-head-afterdark.png";
 import { colors } from "../../styles/variables";
 import useLatest from "../../hooks/useLatest";
 import { Title, BodyText } from "./Styled";
+import useTheme from "../../hooks/useTheme";
 
 const HeaderBar = (props) => {
   const { latestSub, latestFollow } = useLatest();
+  const { isAfterDark } = useTheme();
 
   return (
-    <HeaderBarContainer className={props.fullWidth && "full-width"}>
+    <HeaderBarContainer
+      className={props.fullWidth && "full-width"}
+      isAfterDark={isAfterDark}
+    >
       <Slot className="left-side">
         <Title>Viimeisin tilaaja</Title>
         <BodyText>{latestSub && latestSub.displayName}</BodyText>
@@ -18,7 +24,10 @@ const HeaderBar = (props) => {
         <BodyText>{/* Comes from StreamElements for now */}</BodyText>
       </Slot>
       <div>
-        <MikkisGuyHead src={mikkisGuyHead} alt="" />
+        <MikkisGuyHead
+          src={isAfterDark ? mikkisGuyHeadAfterDark : mikkisGuyHead}
+          alt=""
+        />
       </div>
       <Slot>
         <Title>Viimeisin seuraaja</Title>
@@ -44,7 +53,8 @@ const HeaderBarContainer = styled.div`
   align-self: center;
   width: 1300px;
   margin-top: 30px;
-  background-color: ${colors.gray};
+  background-color: ${({ isAfterDark }) =>
+    isAfterDark ? `${colors.gray}90` : colors.gray};
   padding: 2px 10px;
   border-radius: 10px;
   box-shadow: ${colors.turquoise}40 0px 0px 0px 3px;
