@@ -1,27 +1,25 @@
 version: "3.5"
 
 services:
-  mikkisguy-stream-tokenapi:
-    image: mikkisguy-stream-tokenapi
-    container_name: mikkisguy-stream-tokenapi
-    env_file:
-      - .env
-    environment:
-      - JWT_SECRET=$JWT_SECRET
-      - JWT_EXPIRE=$JWT_EXPIRE
-      - NODE_ENV=production
-    ports:
-      - 7070:7070
+  # mikkisguy-stream-tokenapi:
+  #   image: mikkisguy-stream-tokenapi
+  #   container_name: mikkisguy-stream-tokenapi
+  #   env_file:
+  #     - .env
+  #   environment:
+  #     - JWT_SECRET=$JWT_SECRET
+  #     - JWT_EXPIRE=$JWT_EXPIRE
+  #     - NODE_ENV=production
+  #   ports:
+  #     - 7070:7070
 
   mikkisguy-stream-frontend:
     image: mikkisguy-stream-frontend
     container_name: mikkisguy-stream-frontend
-    depends_on:
-      - mikkisguy-stream-tokenapi
     env_file:
       - .env
     environment:
-      - VITE_TOKEN_API_URL=http://mikkisguy-stream-tokenapi:7070
-      - VITE_STREAM_API_URL=$VITE_STREAM_API_URL
+      - VITE_TOKEN_API_URL=
+      - VITE_STREAM_API_URL=
     ports:
       - 7000:80

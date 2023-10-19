@@ -2,12 +2,12 @@ import styled from "styled-components";
 import mikkisGuyHead from "../../assets/images/mikkisguy-head.png";
 import mikkisGuyHeadAfterDark from "../../assets/images/mikkisguy-head-afterdark.png";
 import { colors } from "../../styles/variables";
-import useLatest from "../../hooks/useLatest";
+// import useLatest from "../../hooks/useLatest";
 import { Title, BodyText } from "./Styled";
 import useTheme from "../../hooks/useTheme";
 
 const HeaderBar = (props) => {
-  const { latestSub, latestFollow } = useLatest();
+  // const { latestSub, latestFollow } = useLatest();
   const { isAfterDark } = useTheme();
 
   return (
@@ -17,7 +17,10 @@ const HeaderBar = (props) => {
     >
       <Slot className="left-side">
         <Title>Viimeisin tilaaja</Title>
-        <BodyText>{latestSub && latestSub.displayName}</BodyText>
+        <BodyText>
+          {/* Comes from StreamElements for now */}
+          <br />
+        </BodyText>
       </Slot>
       <Slot className="left-side">
         <Title>Viimeisin raidi</Title>
@@ -31,13 +34,11 @@ const HeaderBar = (props) => {
       </div>
       <Slot>
         <Title>Viimeisin seuraaja</Title>
-        <BodyText>{latestFollow && latestFollow.displayName}</BodyText>
+        <BodyText>{/* Comes from StreamElements for now */}</BodyText>
       </Slot>
       <Slot>
         <Title>Seuraajatavoite</Title>
-        <BodyText>
-          {latestFollow && latestFollow.otherData.count} / 200
-        </BodyText>
+        <BodyText>{/* Comes from StreamElements for now */}</BodyText>
       </Slot>
     </HeaderBarContainer>
   );

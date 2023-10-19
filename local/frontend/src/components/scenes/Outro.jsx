@@ -9,39 +9,38 @@ import { colors } from "../../styles/variables";
 import styled from "styled-components";
 
 const Outro = ({ asCoding }) => {
-  let subs;
-  let followers;
+  // let subs;
+  // let followers;
 
-  const { data: tokenData, isSuccess: tokenIsSuccess } = useToken();
-  const { data, error, isError, isSuccess } = useQuery(
-    ["stream-api-thanks"],
-    () =>
-      axios(`${STREAM_API_URL}/thanks`, {
-        headers: { Authorization: `Bearer ${tokenData.data.token}` },
-      }),
-    {
-      enabled: tokenIsSuccess,
-    }
-  );
+  // const { data: tokenData, isSuccess: tokenIsSuccess } = useToken();
+  // const { data, error, isError, isSuccess } = useQuery(
+  //   ["stream-api-thanks"],
+  //   () =>
+  //     axios(`${STREAM_API_URL}/thanks`, {
+  //       headers: { Authorization: `Bearer ${tokenData.data.token}` },
+  //     }),
+  //   {
+  //     enabled: tokenIsSuccess,
+  //   }
+  // );
 
-  if (isError) {
-    throw new Error(error);
-  }
+  // if (isError) {
+  //   throw new Error(error);
+  // }
 
-  if (data && isSuccess) {
-    const thanks = data.data;
-    subs = thanks.filter((event) => event.type === EVENT_TYPE.SUB);
-    followers = thanks.filter((event) => event.type === EVENT_TYPE.FOLLOW);
-  }
+  // if (data && isSuccess) {
+  //   const thanks = data.data;
+  //   subs = thanks.filter((event) => event.type === EVENT_TYPE.SUB);
+  //   followers = thanks.filter((event) => event.type === EVENT_TYPE.FOLLOW);
+  // }
 
   return (
     <SceneBackground asCoding={asCoding}>
       <MusicCredit />
       <SceneContainer>
-        <Box>
+        <Box className="topped">
           <Title className="big">Kiitos katsomisesta!</Title>
-
-          {subs?.length > 0 && (
+          {/* {subs?.length > 0 && (
             <Section>
               <Title>Uudet tilaajat</Title>
               <BodyText>
@@ -61,7 +60,7 @@ const Outro = ({ asCoding }) => {
                 })}
               </BodyText>
             </Section>
-          )}
+          )} */}
         </Box>
         <Box>{/* StreamElement chat goes here */}</Box>
       </SceneContainer>
@@ -71,14 +70,14 @@ const Outro = ({ asCoding }) => {
 
 export default Outro;
 
-const Nickname = styled.span`
-  display: inline-block;
-  background-color: ${colors.gray}90;
-  padding: 3px 5px;
-  margin-right: 10px;
-  border-radius: 5px;
-`;
+// const Nickname = styled.span`
+//   display: inline-block;
+//   background-color: ${colors.gray}90;
+//   padding: 3px 5px;
+//   margin-right: 10px;
+//   border-radius: 5px;
+// `;
 
-const Section = styled.div`
-  margin-top: 20px;
-`;
+// const Section = styled.div`
+//   margin-top: 20px;
+// `;

@@ -1,10 +1,4 @@
 {
-  "twitter": {
-    "slug": "twitter",
-    "title": "Seuraa Twitterissä",
-    "content": "Striimi-ilmoitukset ja muutokset @mikkisguy",
-    "color": "#1da1f2"
-  },
   "youtubeMain": {
     "slug": "youtube",
     "title": "MikkisGuy YouTubessa",
@@ -20,7 +14,7 @@
   "schedule": {
     "slug": "twitch",
     "title": "Twitch striimit",
-    "content": "Tällä hetkellä ei ole aikataulua, pistä seuraten niin saat ilmoituksen",
+    "content": "Striimejä noin kolme kertaa viikossa (ma/to/la)",
     "color": "#9146ff"
   },
   "youtubeArchive": {

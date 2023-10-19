@@ -56,4 +56,9 @@ export const Box = styled.div`
   border-radius: 10px;
   padding: 0 40px;
   height: 500px;
+
+  &.topped {
+    justify-content: flex-start;
+    padding-top: 40px;
+  }
 `;

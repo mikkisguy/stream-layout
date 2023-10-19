@@ -16,32 +16,32 @@ const Toasts = () => {
   const [toggleInfo, setToggleInfo] = useState(true);
   const milliseconds = toggleInfo ? SECOND * 6 : visibleFor; // MINUTE * 8
 
-  const { latestSub, latestFollow } = useLatest();
-  const [playFollow] = useSound(FollowNotification, {
-    volume: 0.6,
-    interrupt: false,
-  });
-  const [playSub] = useSound(SubNotification, {
-    volume: 0.5,
-    interrupt: false,
-  });
+  // const { latestSub, latestFollow } = useLatest();
+  // const [playFollow] = useSound(FollowNotification, {
+  //   volume: 0.6,
+  //   interrupt: false,
+  // });
+  // const [playSub] = useSound(SubNotification, {
+  //   volume: 0.5,
+  //   interrupt: false,
+  // });
 
-  useEffect(() => {
-    if (latestSub !== undefined || latestFollow !== undefined) {
-      if (latestSub.isNew) {
-        toast(<EventToast latest={latestSub} />, {
-          autoClose: SECOND * 16,
-          onOpen: () => playSub(),
-        });
-      }
-      if (latestFollow.isNew) {
-        toast(<EventToast latest={latestFollow} />, {
-          autoClose: SECOND * 8,
-          onOpen: () => playFollow(),
-        });
-      }
-    }
-  }, [latestSub, latestFollow]);
+  // useEffect(() => {
+  //   if (latestSub !== undefined || latestFollow !== undefined) {
+  //     if (latestSub.isNew) {
+  //       toast(<EventToast latest={latestSub} />, {
+  //         autoClose: SECOND * 16,
+  //         onOpen: () => playSub(),
+  //       });
+  //     }
+  //     if (latestFollow.isNew) {
+  //       toast(<EventToast latest={latestFollow} />, {
+  //         autoClose: SECOND * 8,
+  //         onOpen: () => playFollow(),
+  //       });
+  //     }
+  //   }
+  // }, [latestSub, latestFollow]);
 
   return (
     <ToastContainer
