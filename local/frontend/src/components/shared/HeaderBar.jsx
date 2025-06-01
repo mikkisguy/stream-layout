@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import mikkisGuyHead from "../../assets/images/mikkisguy-head.png";
-import mikkisGuyHeadAfterDark from "../../assets/images/mikkisguy-head-afterdark.png";
+// import mikkisGuyHead from "../../assets/images/mikkisguy-head.png";
+// import mikkisGuyHeadAfterDark from "../../assets/images/mikkisguy-head-afterdark.png";
+import mikkisGuyText from "../../assets/images/mikkisguy-text.png";
 import { colors } from "../../styles/variables";
 // import useLatest from "../../hooks/useLatest";
 import { Title, BodyText } from "./Styled";
@@ -27,8 +28,9 @@ const HeaderBar = (props) => {
         <BodyText>{/* Comes from StreamElements for now */}</BodyText>
       </Slot>
       <div>
-        <MikkisGuyHead
-          src={isAfterDark ? mikkisGuyHeadAfterDark : mikkisGuyHead}
+        <CenterImage
+          // src={isAfterDark ? mikkisGuyHeadAfterDark : mikkisGuyHead}
+          src={mikkisGuyText}
           alt=""
         />
       </div>
@@ -81,7 +83,7 @@ const Slot = styled.div`
   }
 `;
 
-const MikkisGuyHead = styled.img`
+const CenterImage = styled.img`
   position: absolute;
   top: -12.5%;
   left: 0;

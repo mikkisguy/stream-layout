@@ -12,7 +12,7 @@ const App = () => {
   const visibleFor = SECOND * 8;
   const infoKeys = Object.keys(infoJson);
   const [infoIndex, setInfoIndex] = useState(-1);
-  const [toggleInfo, setToggleInfo] = useState(true);
+  const [toggleInfo, setToggleInfo] = useState(false);
   const milliseconds = toggleInfo ? MINUTE * 8 : visibleFor;
 
   useEffect(() => {

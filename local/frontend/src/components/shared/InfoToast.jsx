@@ -3,6 +3,7 @@ import YouTubeIcon from "../../assets/images/icons/youtube.svg";
 import DiscordIcon from "../../assets/images/icons/discord.svg";
 import TwitchIcon from "../../assets/images/icons/twitch.svg";
 import TwitterIcon from "../../assets/images/icons/twitter.svg";
+import MinecraftIcon from "../../assets/images/icons/minecraft.png";
 import styled from "styled-components";
 
 const InfoToast = ({ info }) => {
@@ -13,13 +14,14 @@ const InfoToast = ({ info }) => {
     if (slug === "discord") return DiscordIcon;
     if (slug === "twitch") return TwitchIcon;
     if (slug === "twitter") return TwitterIcon;
+    if (slug === "minecraft") return MinecraftIcon;
 
     return "";
   };
 
   return (
     <InfoContent>
-      <InfoIcon src={getIcon()} />
+      <InfoIcon src={getIcon()} className={slug} />
       <div>
         <Title>{title}</Title>
         <BodyText className="secondary">{content}</BodyText>
@@ -37,4 +39,10 @@ const InfoContent = styled.div`
 const InfoIcon = styled.img`
   width: 60px;
   padding-right: 20px;
+
+  &.minecraft {
+    width: 60px;
+    height: 50px;
+    padding-top: 10px;
+  }
 `;

@@ -1,21 +1,27 @@
 {
+  "minecraft": {
+    "slug": "minecraft",
+    "title": "Haluatko mukaan pelaamaan?",
+    "content": "Chatissa: !haluanmukaan",
+    "color": "#337121"
+  },
+  "schedule": {
+    "slug": "twitch",
+    "title": "Twitch striimit",
+    "content": "Seuraa niin saat tiedon striimeistä!",
+    "color": "#9146ff"
+  },
+  "discord": {
+    "slug": "discord",
+    "title": "Tuu hengaamaan",
+    "content": "Saat linkin Discordiin kirjoittamalla !discord",
+    "color": "#5865f2"
+  },
   "youtubeMain": {
     "slug": "youtube",
     "title": "MikkisGuy YouTubessa",
     "content": "Minecraftia ja elämää, linkki: !youtube",
     "color": "#ff0000"
-  },
-  "discord": {
-    "slug": "discord",
-    "title": "Tuu hengaamaan!",
-    "content": "Saat linkin Discordiin kirjoittamalla !discord",
-    "color": "#5865f2"
-  },
-  "schedule": {
-    "slug": "twitch",
-    "title": "Twitch striimit",
-    "content": "Striimejä noin kolme kertaa viikossa (ma/to/la)",
-    "color": "#9146ff"
   },
   "youtubeArchive": {
     "slug": "youtube",
