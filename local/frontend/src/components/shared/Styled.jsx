@@ -4,8 +4,7 @@ import { colors, fonts } from "../../styles/variables";
 export const Title = styled.p`
   font-family: ${fonts.title};
   color: ${colors.turquoiseLight};
-  text-transform: uppercase;
-  font-size: 1.2rem;
+  font-size: 1rem;
   letter-spacing: 1px;
 
   &.big {
